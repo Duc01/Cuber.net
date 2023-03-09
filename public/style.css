@@ -1,0 +1,38 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#main-content {
+	display: grid;
+	grid-template-columns: 20% 1fr;
+}
+
+#play-area {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.times {
+	height: 100vh;
+	background: orange;
+}
+
+#menu {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	height: 7vh;
+	min-height: 40px;
+	max-height: 150px;
+	background-color: aquamarine;
+}
+
+.sign-in {
+	border: 1px solid black;
+	padding: 5px;
+	height: 25px;
+	background-color: lightblue;
+}
