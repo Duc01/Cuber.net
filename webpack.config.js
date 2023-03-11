@@ -11,7 +11,7 @@ const stylesHandler = 'style-loader'
 
 
 const config = {
-    entry: ['./src/index.js', './src/auth.js'],
+    entry: ['./src/index.js', './src/auth.js', './src/database.js'],
     output: {
         path: path.resolve(__dirname, 'public/dist'),
     },

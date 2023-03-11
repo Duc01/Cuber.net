@@ -2,12 +2,10 @@ import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from
 import { auth } from './index'
 
 // google sign in popup
-const googleSignIn = async () => {
+const googleSignIn = async (user) => {
 	try {
 		const provider = new GoogleAuthProvider()
 		const result = await signInWithPopup(auth, provider)
-		const credential = GoogleAuthProvider.credentialFromResult(result)
-		const token = credential.accessToken
 	} catch (e) {
 		console.log(e.code, e.message)
 	}
