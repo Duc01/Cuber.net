@@ -1,3 +1,6 @@
+import { doc, collection, addDoc } from 'firebase/firestore'
+import { db, auth } from './index'
+
 export class Timer {
 
 	timerStarted = null
@@ -25,8 +28,17 @@ export class Timer {
 		this.interval = window.setInterval(() => this.displayOutput(), 10)
 	}
 
-	stop() {
+	stop(scramble) {
+		// TODO create new scramble when timer is stopped
 		if (!this.timerStarted) return
+		// adding score to database
+		const userDoc = doc(db, 'users', auth.currentUser.uid)
+		const scoresCollection = collection(userDoc, 'scores')
+		addDoc(scoresCollection, {
+			time: this.formatMS(Date.now() - this.startTime),
+			scramble: scramble
+		})
+		// insuring timer cannot be started when releasing spacebar
 		this.timeout = window.setTimeout(() => {
 			this.timerStarted = false
 		}, 500)

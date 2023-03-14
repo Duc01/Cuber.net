@@ -1,16 +1,19 @@
-import { threeByThreeScramble } from './scramble'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './index'
+import { threeByThreeScramble } from './scramble'
 import { Timer } from './timer'
 
 // slecting scramble class and rescremable button
 const scrambleHTML = document.querySelector('.scramble')
 const rescramble = document.querySelector('#rescramble')
 
-scrambleHTML.innerText = threeByThreeScramble() // generating scramble on page load
+let scramble = threeByThreeScramble() // generating scramble on page load
+scrambleHTML.innerText = scramble
+
 // generating new scramble on button click
 rescramble.addEventListener('click', () => {
-	scrambleHTML.innerText = threeByThreeScramble()
+	scramble = threeByThreeScramble()
+	scrambleHTML.innerText = scramble
 })
 
 // TODO: remove before public release
@@ -30,5 +33,5 @@ playArea.addEventListener('keyup', (e) => {
 })
 
 playArea.addEventListener('keydown', (e) => {
-	if (e.code === "Space") myTimer.stop()
+	if (e.code === "Space") myTimer.stop(scramble)
 })
