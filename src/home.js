@@ -10,10 +10,14 @@ const rescramble = document.querySelector('#rescramble')
 let scramble = threeByThreeScramble() // generating scramble on page load
 scrambleHTML.innerText = scramble
 
-// generating new scramble on button click
-rescramble.addEventListener('click', () => {
+function newScramble() {
 	scramble = threeByThreeScramble()
 	scrambleHTML.innerText = scramble
+}
+
+// generating new scramble on button click
+rescramble.addEventListener('click', () => {
+	newScramble()
 })
 
 // TODO: remove before public release
@@ -33,5 +37,5 @@ playArea.addEventListener('keyup', (e) => {
 })
 
 playArea.addEventListener('keydown', (e) => {
-	if (e.code === "Space") myTimer.stop(scramble)
+	if (e.code === "Space") myTimer.stop(scramble, newScramble)
 })

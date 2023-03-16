@@ -28,7 +28,7 @@ export class Timer {
 		this.interval = window.setInterval(() => this.displayOutput(), 10)
 	}
 
-	stop(scramble) {
+	stop(currentScramble, scrambleFunc) {
 		// TODO create new scramble when timer is stopped
 		if (!this.timerStarted) return
 		// adding score to database
@@ -36,8 +36,9 @@ export class Timer {
 		const scoresCollection = collection(userDoc, 'scores')
 		addDoc(scoresCollection, {
 			time: this.formatMS(Date.now() - this.startTime),
-			scramble: scramble
+			scramble: currentScramble
 		})
+		scrambleFunc()
 		// insuring timer cannot be started when releasing spacebar
 		this.timeout = window.setTimeout(() => {
 			this.timerStarted = false
