@@ -28,23 +28,40 @@ export class Timer {
 		this.interval = window.setInterval(() => this.displayOutput(), 10)
 	}
 
+	/*
+	This code creates the score object in the createScoreData variable, then returns it
+	The returned value is returned again in stop function. There might be a better way to do this.
+	To future me: Past you didn't know how to do this
+	TODO: Fix this mess of return statements
+	*/
+
 	stop(currentScramble, scrambleFunc) {
-		// TODO create new scramble when timer is stopped
 		if (!this.timerStarted) return
+
 		// adding score to database
 		const userDoc = doc(db, 'users', auth.currentUser.uid)
 		const scoresCollection = collection(userDoc, 'scores')
-		addDoc(scoresCollection, {
-			time: this.formatMS(Date.now() - this.startTime),
-			scramble: currentScramble
-		})
+
+		const score = this.createScoreData(currentScramble)
+		addDoc(scoresCollection, score)
 		scrambleFunc()
+
 		// insuring timer cannot be started when releasing spacebar
 		this.timeout = window.setTimeout(() => {
 			this.timerStarted = false
 		}, 500)
 		window.clearInterval(this.interval)
-		this.interval = null
+		this.interval = null // this stops the timer from continuing to run
 		this.displayOutput()
+
+		return score
+	}
+
+	createScoreData(currentScramble) {
+		const score = {
+			time: this.formatMS(Date.now() - this.startTime),
+			scramble: currentScramble
+		}
+		return score
 	}
 }
