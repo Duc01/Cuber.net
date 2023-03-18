@@ -7,6 +7,7 @@ export class Timer {
 	interval = null
 	startTime = null
 	timeout = null
+	score = null
 
 	constructor(outputElem) {
 		this.outputElem = outputElem
@@ -42,7 +43,17 @@ export class Timer {
 		const userDoc = doc(db, 'users', auth.currentUser.uid)
 		const scoresCollection = collection(userDoc, 'scores')
 
-		const score = this.createScoreData(currentScramble)
+		const currentDate = new Date()
+		const score = {
+			time: this.formatMS(Date.now() - this.startTime),
+			scramble: currentScramble,
+			datetime: currentDate.getDate() + "/"
+				+ (currentDate.getMonth() + 1) + "/"
+				+ currentDate.getFullYear() + " @ "
+				+ currentDate.getHours() + ":"
+				+ currentDate.getMinutes() + ":"
+				+ currentDate.getSeconds()
+		}
 		addDoc(scoresCollection, score)
 		scrambleFunc()
 
@@ -56,12 +67,11 @@ export class Timer {
 
 		return score
 	}
-
-	createScoreData(currentScramble) {
-		const score = {
-			time: this.formatMS(Date.now() - this.startTime),
-			scramble: currentScramble
-		}
-		return score
-	}
+	z
+	// createScoreData(currentScramble) {
+	// 	score = {
+	// 		time: this.formatMS(Date.now() - this.startTime),
+	// 		scramble: currentScramble
+	// 	}
+	// }
 }
