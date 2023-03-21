@@ -9,15 +9,6 @@ const rescramble = document.querySelector('#rescramble')
 
 let scoresArray = []
 
-function addScoreToList() {
-	const scoreObject = scoresArray.at(-1)
-	const timesList = document.querySelector('#times')
-	const newScore = document.createElement('div')
-	newScore.innerHTML = `<h3>${scoreObject.time}</h3> <p>${scoreObject.datetime}</p>`
-	newScore.classList.add('score')
-	timesList.prepend(newScore)
-}
-
 let scramble = threeByThreeScramble() // generating scramble on page load
 scrambleHTML.innerText = scramble
 
@@ -49,8 +40,6 @@ playArea.addEventListener('keyup', (e) => {
 
 playArea.addEventListener('keydown', (e) => {
 	if (e.code === "Space") {
-		const score = myTimer.stop(scramble, newScramble)
-		scoresArray.push(score)
-		addScoreToList()
+		myTimer.stop(scramble, newScramble, scoresArray)
 	}
 })

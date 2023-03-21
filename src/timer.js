@@ -29,20 +29,7 @@ export class Timer {
 		this.interval = window.setInterval(() => this.displayOutput(), 10)
 	}
 
-	/*
-	This code creates the score object in the createScoreData variable, then returns it
-	The returned value is returned again in stop function. There might be a better way to do this.
-	To future me: Past you didn't know how to do this
-	TODO: Fix this mess of return statements
-	*/
-
-	stop(currentScramble, scrambleFunc) {
-		if (!this.timerStarted) return
-
-		// adding score to database
-		const userDoc = doc(db, 'users', auth.currentUser.uid)
-		const scoresCollection = collection(userDoc, 'scores')
-
+	createScoreData(currentScramble) {
 		const currentDate = new Date()
 		const score = {
 			time: this.formatMS(Date.now() - this.startTime),
@@ -54,7 +41,27 @@ export class Timer {
 				+ currentDate.getMinutes() + ":"
 				+ currentDate.getSeconds()
 		}
-		addDoc(scoresCollection, score)
+		return score
+	}
+
+	addScoreToList(score, scoresArray) {
+		scoresArray.push(score)
+		const scoreObject = scoresArray.at(-1)
+		const timesList = document.querySelector('#times')
+		const newScore = document.createElement('div')
+		newScore.innerHTML = `<h3>${scoreObject.time}</h3> <p>${scoreObject.datetime}</p>`
+		newScore.classList.add('score')
+		timesList.prepend(newScore)
+	}
+
+	stop(currentScramble, scrambleFunc, scoresArray) {
+		if (!this.timerStarted) return
+
+		const userDoc = doc(db, 'users', auth.currentUser.uid)
+		const scoresCollection = collection(userDoc, 'scores')
+		const currentScore = this.createScoreData(currentScramble)
+		addDoc(scoresCollection, currentScore)
+		this.addScoreToList(currentScore, scoresArray)
 		scrambleFunc()
 
 		// insuring timer cannot be started when releasing spacebar
@@ -64,14 +71,5 @@ export class Timer {
 		window.clearInterval(this.interval)
 		this.interval = null // this stops the timer from continuing to run
 		this.displayOutput()
-
-		return score
 	}
-	z
-	// createScoreData(currentScramble) {
-	// 	score = {
-	// 		time: this.formatMS(Date.now() - this.startTime),
-	// 		scramble: currentScramble
-	// 	}
-	// }
 }
