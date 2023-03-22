@@ -1,5 +1,6 @@
 import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from './index'
+import { collection, getDocs, doc } from 'firebase/firestore'
+import { auth, db } from './index'
 import { threeByThreeScramble } from './scramble'
 import { Timer } from './timer'
 
@@ -22,9 +23,13 @@ rescramble.addEventListener('click', () => {
 	newScramble()
 })
 
-// TODO: remove before public release
-onAuthStateChanged(auth, (user) => {
-	if (user) console.log(user)
+onAuthStateChanged(auth, async (user) => {
+	if (user) {
+		const userDoc = doc(db, 'users', auth.currentUser.uid)
+		const colRef = collection(userDoc, 'scores')
+		const docsSnap = await getDocs(colRef)
+		docsSnap.forEach(doc => myTimer.addScoreToList(doc.data(), scoresArray))
+	}
 	else console.log('No user signed in!')
 })
 

@@ -18,7 +18,8 @@
 }
 
 #times {
-	height: 100%;
+	height: 92vh;
+	overflow-y: scroll;
 	width: 20vw;
 	min-width: 200px;
 	max-width: 400px;

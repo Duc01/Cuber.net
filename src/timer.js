@@ -44,6 +44,11 @@ export class Timer {
 		return score
 	}
 
+	/**
+	 * 
+	 * @param {*} score The current score object
+	 * @param {*} scoresArray The array where scores are stores
+	 */
 	addScoreToList(score, scoresArray) {
 		scoresArray.push(score)
 		const scoreObject = scoresArray.at(-1)
