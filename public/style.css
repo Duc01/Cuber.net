@@ -8,14 +8,6 @@
 	box-sizing: border-box;
 }
 
-#main-content {
-	height: calc(100vh - 8vh);
-	display: grid;
-	grid-template-columns: 20% 1fr;
-	background-color: #282523;
-	color: white;
-}
-
 #play-area {
 	display: flex;
 	justify-content: center;
