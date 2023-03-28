@@ -6,20 +6,24 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Cuber</title>
-	<link rel="stylesheet" href="style.css">
-	<!-- <script src="dist/home.bundle.js" defer></script> -->
+	<link rel="stylesheet" href="dist/output.css">
+	<script src="dist/home.bundle.js" defer></script>
 </head>
 
 <body>
-	<nav id="menu">
-		<button class="sign-in" onclick="document.location.href='login.html'">Sign in</button>
+	<nav class="flex content-center justify-around items-center h-[8vh] min-h-[70px] max-h-[150px] bg-nav">
+		<button class="text-black mr-16 ml-auto rounded-[3px] bg-[#db9f5e] px-[5px] py-[3px] border-none"
+			onclick="document.location.href='login.html'">Sign
+			in</button>
 	</nav>
-	<section id="main-content">
-		<section id="times"></section>
-		<section id="play-area" tabindex="-1">
-			<h2 class="scramble">Scramble</h2>
+	<section id="main-content" class="grid grid-cols-primary-grid text-white">
+		<section id="times" class="bg-side-menu overflow-scroll h-[92vh] min-w-[200px] max-w-[400px]">
+		</section>
+		<section id="play-area" class="inset-0 bg-background-main flex justify-center items-center flex-col"
+			tabindex="-1">
+			<h2 class="scramble text-2xl">Scramble</h2>
 			<button id="rescramble">Rescramble</button>
-			<h1 id="timer">00:00</h1>
+			<h1 id="timer" class="text-9xl">00:00</h1>
 		</section>
 	</section>
 </body>

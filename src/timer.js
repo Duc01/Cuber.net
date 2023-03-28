@@ -54,8 +54,10 @@ export class Timer {
 		const scoreObject = scoresArray.at(-1)
 		const timesList = document.querySelector('#times')
 		const newScore = document.createElement('div')
-		newScore.innerHTML = `<h3>${scoreObject.time}</h3> <p>${scoreObject.datetime}</p>`
-		newScore.classList.add('score')
+		newScore.innerHTML = `
+		<h3 class="content-center p-0">${scoreObject.time}</h3>
+		<p>${scoreObject.datetime}</p>`
+		newScore.classList.add('bg-[#6e5235]', 'w-[90%]', 'h-[150%px]', 'p-4', 'm-[10px]', 'mx-auto', 'rounded-[5px]', 'drop-shadow-xl')
 		timesList.prepend(newScore)
 	}
 
