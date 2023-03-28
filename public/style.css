@@ -8,43 +8,7 @@
 	box-sizing: border-box;
 }
 
-#play-area {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-}
-
-#times {
-	height: 92vh;
-	overflow-y: scroll;
-	width: 18.5vw;
-	min-width: 200px;
-	max-width: 400px;
-	background: #50433a;
-}
-
-#menu {
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	height: 8vh;
-	min-height: 70 px;
-	max-height: 150px;
-	background-color: #363230;
-}
-
-.sign-in {
-	margin-right: 5%;
-	margin-left: auto;
-	border-radius: 3px;
-	padding: 5px;
-	border: none;
-	height: 25px;
-	background-color: #db9f5e;
-}
-
-.score {
+.none {
 	/* border: 1px solid black; */
 	background-color: #6e5235;
 	width: 80%;

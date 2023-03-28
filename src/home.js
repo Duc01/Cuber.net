@@ -23,15 +23,15 @@ rescramble.addEventListener('click', () => {
 	newScramble()
 })
 
-onAuthStateChanged(auth, async (user) => {
-	if (user) {
-		const userDoc = doc(db, 'users', auth.currentUser.uid)
-		const colRef = collection(userDoc, 'scores')
-		const docsSnap = await getDocs(colRef)
-		docsSnap.forEach(doc => myTimer.addScoreToList(doc.data(), scoresArray))
-	}
-	else console.log('No user signed in!')
-})
+// onAuthStateChanged(auth, async (user) => {
+// 	if (user) {
+// 		const userDoc = doc(db, 'users', auth.currentUser.uid)
+// 		const colRef = collection(userDoc, 'scores')
+// 		const docsSnap = await getDocs(colRef)
+// 		docsSnap.forEach(doc => myTimer.addScoreToList(doc.data(), scoresArray))
+// 	}
+// 	else console.log('No user signed in!')
+// })
 
 // selecting timer elements
 const timerElem = document.querySelector('#timer')
