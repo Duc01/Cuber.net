@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from 'firebase/auth'
-import { collection, getDocs, doc } from 'firebase/firestore'
+import { collection, getDocs, doc, query, orderBy, limit, onSnapshot } from 'firebase/firestore'
 import { auth, db } from './index'
 import { threeByThreeScramble } from './scramble'
 import { Timer } from './timer'
@@ -18,6 +18,12 @@ function newScramble() {
 	scrambleHTML.innerText = scramble
 }
 
+// selecting timer elements
+const timerElem = document.querySelector('#timer')
+const playArea = document.querySelector('#play-area')
+
+const myTimer = new Timer(timerElem) // creating a new timer instance
+
 // generating new scramble on button click
 rescramble.addEventListener('click', () => {
 	newScramble()
@@ -27,17 +33,16 @@ onAuthStateChanged(auth, async (user) => {
 	if (user) {
 		const userDoc = doc(db, 'users', auth.currentUser.uid)
 		const colRef = collection(userDoc, 'scores')
-		const docsSnap = await getDocs(colRef)
-		docsSnap.forEach(doc => myTimer.addScoreToList(doc.data(), scoresArray))
+		// const docsSnap = await getDocs(colRef)
+		const data = query(colRef, orderBy('datetime', 'desc'), limit(10))
+		const unsubscribe = onSnapshot(data, (recentScores) => {
+			recentScores.forEach(doc => myTimer.addScoreToList(doc.data(), scoresArray, true))
+		})
 	}
 	else console.log('No user signed in!')
 })
 
-// selecting timer elements
-const timerElem = document.querySelector('#timer')
-const playArea = document.querySelector('#play-area')
-
-const myTimer = new Timer(timerElem) // creating a new timer instance
+if (typeof unsubscribe !== 'undefined') unsubscribe()
 
 playArea.addEventListener('keyup', (e) => {
 	if (e.code === "Space") myTimer.start()

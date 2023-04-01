@@ -48,8 +48,9 @@ export class Timer {
 	 * 
 	 * @param {*} score The current score object
 	 * @param {*} scoresArray The array where scores are stores
+	 * @param {boolean} isAppend whether the function should use append or prepend
 	 */
-	addScoreToList(score, scoresArray) {
+	addScoreToList(score, scoresArray, isAppend) {
 		scoresArray.push(score)
 		const scoreObject = scoresArray.at(-1)
 		const timesList = document.querySelector('#times')
@@ -58,7 +59,8 @@ export class Timer {
 		<h3 class="content-center p-0">${scoreObject.time}</h3>
 		<p>${scoreObject.datetime}</p>`
 		newScore.classList.add('bg-[#6e5235]', 'w-[90%]', 'h-[150%px]', 'p-4', 'm-[10px]', 'mx-auto', 'rounded-[5px]', 'drop-shadow-xl')
-		timesList.prepend(newScore)
+		if (isAppend) timesList.append(newScore)
+		else timesList.prepend(newScore)
 	}
 
 	stop(currentScramble, scrambleFunc, scoresArray) {
@@ -67,8 +69,9 @@ export class Timer {
 		const userDoc = doc(db, 'users', auth.currentUser.uid)
 		const scoresCollection = collection(userDoc, 'scores')
 		const currentScore = this.createScoreData(currentScramble)
+		this.interval = null // this stops the timer from continuing to run
 		addDoc(scoresCollection, currentScore)
-		this.addScoreToList(currentScore, scoresArray)
+		this.addScoreToList(currentScore, scoresArray, false)
 		scrambleFunc()
 
 		// insuring timer cannot be started when releasing spacebar
@@ -76,7 +79,6 @@ export class Timer {
 			this.timerStarted = false
 		}, 500)
 		window.clearInterval(this.interval)
-		this.interval = null // this stops the timer from continuing to run
 		this.displayOutput()
 	}
 }
