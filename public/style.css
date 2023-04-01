@@ -7,12 +7,3 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-
-.none {
-	/* border: 1px solid black; */
-	background-color: #6e5235;
-	width: 80%;
-	height: 200px;
-	padding: 1em;
-	margin: 10px;
-}
