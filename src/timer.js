@@ -56,9 +56,9 @@ export class Timer {
 		const timesList = document.querySelector('#times')
 		const newScore = document.createElement('div')
 		newScore.innerHTML = `
-		<h3 class="content-center p-0">${scoreObject.time}</h3>
-		<p>${scoreObject.datetime}</p>`
-		newScore.classList.add('bg-[#6e5235]', 'w-[90%]', 'h-[150%px]', 'p-4', 'm-[10px]', 'mx-auto', 'rounded-[5px]', 'drop-shadow-xl')
+		<h3 class="content-center p-0 font-bold text-2xl">${scoreObject.time}</h3>
+		<p class="text-sm">${scoreObject.datetime}</p>`
+		newScore.classList.add('bg-[#6e5235]', 'w-[90%]', 'h-[150px]', 'p-4', 'm-[10px]', 'mx-auto', 'rounded-[5px]', 'drop-shadow-xl')
 		if (isAppend) timesList.append(newScore)
 		else timesList.prepend(newScore)
 	}

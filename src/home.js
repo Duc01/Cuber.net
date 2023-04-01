@@ -18,6 +18,8 @@ function newScramble() {
 	scrambleHTML.innerText = scramble
 }
 
+newScramble()
+
 // selecting timer elements
 const timerElem = document.querySelector('#timer')
 const playArea = document.querySelector('#play-area')
@@ -35,14 +37,19 @@ onAuthStateChanged(auth, async (user) => {
 		const colRef = collection(userDoc, 'scores')
 		// const docsSnap = await getDocs(colRef)
 		const data = query(colRef, orderBy('datetime', 'desc'), limit(10))
-		const unsubscribe = onSnapshot(data, (recentScores) => {
-			recentScores.forEach(doc => myTimer.addScoreToList(doc.data(), scoresArray, true))
+		// const unsubscribe = onSnapshot(data, (recentScores) => {
+		// 	recentScores.forEach(doc => {
+		// 		myTimer.addScoreToList(doc.data(), scoresArray, true)
+		// 	})
+		// })
+		// unsubscribe()
+		const docsSnap = await getDocs(data)
+		docsSnap.forEach(doc => {
+			myTimer.addScoreToList(doc.data(), scoresArray, true)
 		})
 	}
 	else console.log('No user signed in!')
 })
-
-if (typeof unsubscribe !== 'undefined') unsubscribe()
 
 playArea.addEventListener('keyup', (e) => {
 	if (e.code === "Space") myTimer.start()
