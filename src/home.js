@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from 'firebase/auth'
-import { collection, getDocs, doc, query, orderBy, limit, onSnapshot } from 'firebase/firestore'
+import { collection, getDocs, doc, query, orderBy, limit } from 'firebase/firestore'
 import { auth, db } from './index'
 import { threeByThreeScramble } from './scramble'
 import { Timer } from './timer'
@@ -35,14 +35,7 @@ onAuthStateChanged(auth, async (user) => {
 	if (user) {
 		const userDoc = doc(db, 'users', auth.currentUser.uid)
 		const colRef = collection(userDoc, 'scores')
-		// const docsSnap = await getDocs(colRef)
 		const data = query(colRef, orderBy('datetime', 'desc'), limit(10))
-		// const unsubscribe = onSnapshot(data, (recentScores) => {
-		// 	recentScores.forEach(doc => {
-		// 		myTimer.addScoreToList(doc.data(), scoresArray, true)
-		// 	})
-		// })
-		// unsubscribe()
 		const docsSnap = await getDocs(data)
 		docsSnap.forEach(doc => {
 			myTimer.addScoreToList(doc.data(), scoresArray, true)
