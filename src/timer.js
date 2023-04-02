@@ -58,7 +58,7 @@ export class Timer {
 		newScore.innerHTML = `
 		<h3 class="content-center p-0 font-bold text-2xl">${scoreObject.time}</h3>
 		<p class="text-sm">${scoreObject.datetime}</p>`
-		newScore.classList.add('bg-[#6e5235]', 'w-[90%]', 'h-[150px]', 'p-4', 'm-[10px]', 'mx-auto', 'rounded-[5px]', 'drop-shadow-xl')
+		newScore.classList.add('bg-[#6e5235]', 'w-[90%]', 'h-[150px]', 'p-4', 'my-4', 'mx-auto', 'rounded-[5px]', 'drop-shadow-xl')
 		if (isAppend) timesList.append(newScore)
 		else timesList.prepend(newScore)
 	}
