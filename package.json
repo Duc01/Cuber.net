@@ -13,6 +13,7 @@
 	},
 	"dependencies": {
 		"firebase": "^9.17.2",
+		"scramble-display": "^0.5.4",
 		"scrambow": "^1.7.0"
 	},
 	"name": "pacecuber",

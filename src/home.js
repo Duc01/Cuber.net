@@ -1,21 +1,30 @@
 import { onAuthStateChanged } from 'firebase/auth'
 import { collection, getDocs, doc, query, orderBy, limit } from 'firebase/firestore'
 import { auth, db } from './index'
-import { threeByThreeScramble } from './scramble'
-import { Timer } from './timer'
+import { Cube } from './Cube'
+import { Timer } from './Timer'
 
 // slecting scramble class and rescremable button
 const scrambleHTML = document.querySelector('.scramble')
 const rescramble = document.querySelector('#rescramble')
+const cubeInstance = new Cube()
 
 let scoresArray = []
 
-let scramble = threeByThreeScramble() // generating scramble on page load
+let scramble = cubeInstance.threeByThreeScramble() // generating scramble on page load
 scrambleHTML.innerText = scramble
 
+let scrambleVisual = cubeInstance.scrambleDisplay(scramble)
+scrambleVisual.classList.add()
+const scrambleDisplayBox = document.querySelector('#scramble-display')
+scrambleDisplayBox.appendChild(scrambleVisual)
+
 function newScramble() {
-	scramble = threeByThreeScramble()
+	scramble = cubeInstance.threeByThreeScramble()
 	scrambleHTML.innerText = scramble
+	scrambleVisual = cubeInstance.scrambleDisplay(scramble)
+	scrambleDisplayBox.innerHTML = ''
+	scrambleDisplayBox.appendChild(scrambleVisual)
 }
 
 newScramble()
