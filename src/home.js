@@ -15,7 +15,6 @@ let scramble = cubeInstance.threeByThreeScramble() // generating scramble on pag
 scrambleHTML.innerText = scramble
 
 let scrambleVisual = cubeInstance.scrambleDisplay(scramble)
-scrambleVisual.classList.add()
 const scrambleDisplayBox = document.querySelector('#scramble-display')
 scrambleDisplayBox.appendChild(scrambleVisual)
 
