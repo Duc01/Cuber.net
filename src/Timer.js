@@ -3,10 +3,8 @@ import { db, auth } from './index'
 
 export class Timer {
 
-	timerStarted = null
 	interval = null
 	startTime = null
-	timeout = null
 	score = null
 
 	constructor(outputElem) {
@@ -22,7 +20,8 @@ export class Timer {
 	}
 
 	start() {
-		if (this.timerStarted) return
+		// only starting when there is no ongoing interval
+		if (this.interval !== null) return
 		this.startTime = Date.now()
 		this.displayOutput()
 		this.timerStarted = true
@@ -64,21 +63,20 @@ export class Timer {
 	}
 
 	stop(currentScramble, scrambleFunc, scoresArray) {
-		if (!this.timerStarted) return
-
+		if (!this.interval) return
+		// save score to database
 		const userDoc = doc(db, 'users', auth.currentUser.uid)
 		const scoresCollection = collection(userDoc, 'scores')
 		const currentScore = this.createScoreData(currentScramble)
-		this.interval = null // this stops the timer from continuing to run
 		addDoc(scoresCollection, currentScore)
 		this.addScoreToList(currentScore, scoresArray, false)
-		scrambleFunc()
 
-		// insuring timer cannot be started when releasing spacebar
-		this.timeout = window.setTimeout(() => {
-			this.timerStarted = false
+		// stopping timer
+		window.setTimeout(() => {
+			this.interval = null
 		}, 500)
 		window.clearInterval(this.interval)
 		this.displayOutput()
+		scrambleFunc()
 	}
 }
