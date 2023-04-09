@@ -1,4 +1,4 @@
-import { doc, collection, addDoc } from 'firebase/firestore'
+import { doc, collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { db, auth } from './index'
 
 export class Timer {
@@ -38,7 +38,8 @@ export class Timer {
 				+ currentDate.getFullYear() + " @ "
 				+ currentDate.getHours() + ":"
 				+ currentDate.getMinutes() + ":"
-				+ currentDate.getSeconds()
+				+ currentDate.getSeconds(),
+			timestamp: serverTimestamp()
 		}
 		return score
 	}
