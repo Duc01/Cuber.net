@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from 'firebase/auth'
-import { collection, getDocs, doc, query, orderBy, limit } from 'firebase/firestore'
+import { collection, doc, getDocs, query, limit, orderBy } from 'firebase/firestore'
 import { auth, db } from './index'
 import { Cube } from './Cube'
 import { Timer } from './Timer'
