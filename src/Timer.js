@@ -1,13 +1,10 @@
-import { doc, collection, addDoc, serverTimestamp } from 'firebase/firestore'
-import { db, auth } from './index'
-
 export class Timer {
-
 	interval = null
 	startTime = null
-	score = null
+	timeout = null
 
 	constructor(outputElem) {
+		// referencing HTML object to display text
 		this.outputElem = outputElem
 	}
 
@@ -15,69 +12,25 @@ export class Timer {
 		this.outputElem.textContent = this.formatMS(Date.now() - this.startTime)
 	}
 
+	// format date to minutes:seconds.subseconds
 	formatMS(ms) {
 		return new Date(ms).toISOString().substring(14, 22)
 	}
 
 	start() {
-		// only starting when there is no ongoing interval
-		if (this.interval !== null) return
+		if (this.interval) return
 		this.startTime = Date.now()
 		this.displayOutput()
-		this.timerStarted = true
 		this.interval = window.setInterval(() => this.displayOutput(), 10)
 	}
 
-	createScoreData(currentScramble) {
-		const currentDate = new Date()
-		const score = {
-			time: this.formatMS(Date.now() - this.startTime),
-			scramble: currentScramble,
-			datetime: currentDate.getDate() + "/"
-				+ (currentDate.getMonth() + 1) + "/"
-				+ currentDate.getFullYear() + " @ "
-				+ currentDate.getHours() + ":"
-				+ currentDate.getMinutes() + ":"
-				+ currentDate.getSeconds(),
-			timestamp: serverTimestamp()
-		}
-		return score
-	}
-
-	/**
-	 * 
-	 * @param {*} score The current score object
-	 * @param {*} scoresArray The array where scores are stores
-	 * @param {boolean} isAppend whether the function should use append or prepend
-	 */
-	addScoreToList(score, scoresArray, isAppend) {
-		scoresArray.push(score)
-		const scoreObject = scoresArray.at(-1)
-		const timesList = document.querySelector('#times')
-		const newScore = document.createElement('div')
-		newScore.innerHTML = `
-		<h3 class="content-center p-0 font-bold text-2xl">${scoreObject.time}</h3>
-		<p class="text-sm">${scoreObject.datetime}</p>`
-		newScore.classList.add('bg-[#6e5235]', 'w-[90%]', 'h-[150px]', 'p-4', 'my-4', 'mx-auto', 'rounded-[5px]', 'drop-shadow-xl')
-		if (isAppend) timesList.append(newScore)
-		else timesList.prepend(newScore)
-	}
-
-	stop(currentScramble, scrambleFunc, scoresArray) {
+	stop() {
 		if (!this.interval) return
-		// save score to database
-		const userDoc = doc(db, 'users', auth.currentUser.uid)
-		const scoresCollection = collection(userDoc, 'scores')
-		const currentScore = this.createScoreData(currentScramble)
-		addDoc(scoresCollection, currentScore)
-		this.addScoreToList(currentScore, scoresArray, false)
-
-		// stopping timer
-		window.setTimeout(() => {
-			this.interval = null
-		}, 500)
 		window.clearInterval(this.interval)
+		// this.interval = null
 		this.displayOutput()
-		scrambleFunc()
+		this.timeout = window.setTimeout(() => {
+			this.interval = null
+		}, 2000)
 	}
 }
