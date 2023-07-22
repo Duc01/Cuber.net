@@ -1,4 +1,7 @@
 import { serverTimestamp } from "firebase/firestore"
+import { db, auth } from './index'
+import { addDoc, collection, doc } from "firebase/firestore"
+
 export class Timer {
 	interval = null
 	startTime = null
@@ -48,12 +51,21 @@ export class Timer {
 		else alert('Scramble not updated. Try again')
 	}
 
+	saveScore() {
+		const scoreData = this.createScoreData()
+		// location to user
+		const userData = doc(db, 'users', auth.currentUser.uid)
+		// reference to scores collection of specific user
+		const scoresCollection = collection(userData, 'scores')
+		addDoc(scoresCollection, scoreData)
+	}
+
 	stop() {
 		// returning false for use in home.js
 		if (!this.interval) return false
 		window.clearInterval(this.interval)
-		// this.interval = null
 		this.displayOutput()
+		this.saveScore()
 		this.timeout = window.setTimeout(() => {
 			this.interval = null
 		}, 2000)
