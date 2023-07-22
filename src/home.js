@@ -14,6 +14,17 @@ const scrambleText = document.querySelector('.scramble') // scramble display ele
 const cubeInstance = new Cube('ThreeByThree') // cube class instance
 const reScrambleBtn = document.querySelector('#rescramble')
 
+// displaying log in or log out buttons
+onAuthStateChanged(auth, (user) => {
+	if (user) {
+		signInBtn.setAttribute('hidden', true)
+		signOutBtn.removeAttribute('hidden')
+	} else if (!user) {
+		signInBtn.removeAttribute('hidden')
+		signOutBtn.setAttribute('hidden', true)
+	}
+})
+
 // setting scramble to null to be updated later
 // if scramble is null when timer is stopped then an alert should be triggered
 const myTimer = new Timer(timerElem, null)
@@ -41,16 +52,7 @@ playArea.addEventListener('keydown', (e) => {
 	}
 })
 
-// displaying log in or log out buttons
-onAuthStateChanged(auth, (user) => {
-	if (user) {
-		signInBtn.setAttribute('hidden', true)
-		signOutBtn.removeAttribute('hidden')
-	} else if (!user) {
-		signInBtn.removeAttribute('hidden')
-		signOutBtn.setAttribute('hidden', true)
-	}
-})
+
 signOutBtn.addEventListener('click', () => signOut(auth))
 
 reScrambleBtn.addEventListener('click', newScramble)
