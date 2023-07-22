@@ -10,11 +10,22 @@ const playArea = document.querySelector('#play-area') // central area
 const signInBtn = document.querySelector('.sign-in')
 const signOutBtn = document.querySelector('.sign-out')
 
-const myTimer = new Timer(timerElem)
-
 const scrambleText = document.querySelector('.scramble') // scramble display element
 const cubeInstance = new Cube('ThreeByThree') // cube class instance
 const reScrambleBtn = document.querySelector('#rescramble')
+
+// setting scramble to null to be updated later
+// if scramble is null when timer is stopped then an alert should be triggered
+const myTimer = new Timer(timerElem, null)
+
+// creating new scramble
+function newScramble() {
+	const generatedScramble = cubeInstance.generateScramble()
+	scrambleText.innerHTML = generatedScramble
+	// updating the new scrambe for the TImer function
+	myTimer.updateScramble(generatedScramble)
+}
+newScramble() // generating new scramble on intial load
 
 // timer start
 playArea.addEventListener('keyup', (e) => {
@@ -23,7 +34,11 @@ playArea.addEventListener('keyup', (e) => {
 
 // timer stop
 playArea.addEventListener('keydown', (e) => {
-	if (e.code === 'Space') myTimer.stop()
+	if (e.code === 'Space') {
+		// checking if the function returned true
+		// making sure new scramble is only generated when timer is stopped
+		if (myTimer.stop()) newScramble()
+	}
 })
 
 // displaying log in or log out buttons
@@ -38,8 +53,4 @@ onAuthStateChanged(auth, (user) => {
 })
 signOutBtn.addEventListener('click', () => signOut(auth))
 
-function newScramble() {
-	scrambleText.innerHTML = cubeInstance.generateScramble()
-}
-newScramble() // generating new scramble on intial load
 reScrambleBtn.addEventListener('click', newScramble)
