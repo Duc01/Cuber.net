@@ -14,6 +14,8 @@ const scrambleText = document.querySelector('.scramble') // scramble display ele
 const cubeInstance = new Cube('ThreeByThree') // cube class instance
 const reScrambleBtn = document.querySelector('#rescramble')
 
+let scoresArray = []
+
 // displaying log in or log out buttons
 onAuthStateChanged(auth, (user) => {
 	if (user) {
@@ -27,7 +29,7 @@ onAuthStateChanged(auth, (user) => {
 
 // setting scramble to null to be updated later
 // if scramble is null when timer is stopped then an alert should be triggered
-const myTimer = new Timer(timerElem, null)
+const myTimer = new Timer(timerElem, null, scoresArray)
 
 // creating new scramble
 function newScramble() {
