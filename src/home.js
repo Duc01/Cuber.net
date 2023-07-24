@@ -14,6 +14,7 @@ const signOutBtn = document.querySelector('.sign-out')
 const scrambleText = document.querySelector('.scramble') // scramble display element
 const cubeInstance = new Cube('ThreeByThree') // cube class instance
 const reScrambleBtn = document.querySelector('#rescramble')
+const scrambleDisplayBox = document.querySelector('#scramble-display')
 
 let scoresArray = []
 
@@ -44,9 +45,14 @@ const myTimer = new Timer(timerElem, null, scoresArray)
 // creating new scramble
 function newScramble() {
 	const generatedScramble = cubeInstance.generateScramble()
-	scrambleText.innerHTML = generatedScramble
-	// updating the new scrambe for the TImer function
-	myTimer.updateScramble(generatedScramble)
+	scrambleText.innerHTML = generatedScramble[0]
+	// updating the new scrambe for the Timer function
+	myTimer.updateScramble(generatedScramble[0])
+
+	const scrambleVisual = generatedScramble[1]
+	scrambleDisplayBox.innerHTML = ''
+	scrambleDisplayBox.appendChild(scrambleVisual)
+
 }
 newScramble() // generating new scramble on intial load
 

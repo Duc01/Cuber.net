@@ -1,4 +1,5 @@
 import { Scrambow } from "scrambow"
+import { ScrambleDisplay } from "scramble-display"
 
 export class Cube {
 	constructor(cubeType) {
@@ -8,7 +9,9 @@ export class Cube {
 	generateScramble() {
 		switch (this.cubeType) {
 			case 'ThreeByThree':
-				return this.threeByThreeScramble()
+				const scramble = this.threeByThreeScramble()
+				const scrambleVisual = this.threeByThreeDisplay(scramble)
+				return [scramble, scrambleVisual]
 		}
 	}
 
@@ -17,5 +20,12 @@ export class Cube {
 		let scrambleObject = threeXthree.get(1)[0]
 		let scramble = Object.values(scrambleObject)[0]
 		return scramble
+	}
+
+	threeByThreeDisplay(currentScramble) {
+		const el = new ScrambleDisplay()
+		el.event = '333'
+		el.scramble = currentScramble
+		return el
 	}
 }
