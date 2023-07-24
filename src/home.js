@@ -1,6 +1,7 @@
 import { Timer } from './Timer'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
-import { auth } from './index'
+import { collection, doc, query, getDocs, orderBy, limit } from 'firebase/firestore'
+import { auth, db } from './index'
 import { Cube } from './Cube'
 
 const timerElem = document.querySelector('#timer') // timer display
@@ -17,10 +18,19 @@ const reScrambleBtn = document.querySelector('#rescramble')
 let scoresArray = []
 
 // displaying log in or log out buttons
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
 	if (user) {
+		// setting visibility of sign in and out btn
 		signInBtn.setAttribute('hidden', true)
 		signOutBtn.removeAttribute('hidden')
+		// loading existing scores
+		const userDoc = doc(db, 'users', auth.currentUser.uid)
+		const colRef = collection(userDoc, 'scores')
+		const data = query(colRef, orderBy('datetime', 'desc'), limit(10))
+		const docsSnap = await getDocs(data)
+		docsSnap.forEach(doc => {
+			myTimer.addScoreToList(doc.data(), true)
+		})
 	} else if (!user) {
 		signInBtn.removeAttribute('hidden')
 		signOutBtn.setAttribute('hidden', true)
