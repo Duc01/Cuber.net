@@ -1,19 +1,22 @@
-import { serverTimestamp } from "firebase/firestore"
 import { db, auth } from './index'
-import { addDoc, collection, doc } from "firebase/firestore"
+import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore'
 
 export class Timer {
 	interval = null
 	startTime = null
 	timeout = null
 
+	/**
+	 * @param {HTMLElement} outputElem
+	 * @param {null | string} currentScramble
+	 * @param {Array<any>} scoresArray
+	 */
 	constructor(outputElem, currentScramble, scoresArray) {
 		// referencing HTML object to display text
 		this.outputElem = outputElem
 		this.currentScramble = currentScramble
 		this.scoresArray = scoresArray
 	}
-
 
 	updateScramble(newScramble) {
 		this.currentScramble = newScramble
@@ -40,12 +43,18 @@ export class Timer {
 		const score = {
 			time: this.formatMS(Date.now() - this.startTime),
 			scramble: this.currentScramble,
-			datetime: currentDate.getDate() + "/"
-				+ (currentDate.getMonth() + 1) + "/"
-				+ currentDate.getFullYear() + " @ "
-				+ currentDate.getHours() + ":"
-				+ currentDate.getMinutes() + ":"
-				+ currentDate.getSeconds(),
+			datetime:
+				currentDate.getDate() +
+				'/' +
+				(currentDate.getMonth() + 1) +
+				'/' +
+				currentDate.getFullYear() +
+				' @ ' +
+				currentDate.getHours() +
+				':' +
+				currentDate.getMinutes() +
+				':' +
+				currentDate.getSeconds(),
 			timestamp: serverTimestamp()
 		}
 		if (score.scramble) return score
@@ -60,7 +69,16 @@ export class Timer {
 		newScore.innerHTML = `
 		<h3 class="content-center p-0 font-bold text-2xl">${scoreData.time}</h3>
 		<p class="text-sm">${scoreData.datetime}</p>`
-		newScore.classList.add('bg-[#6e5235]', 'w-[90%]', 'h-[150px]', 'p-4', 'my-4', 'mx-auto', 'rounded-[5px]', 'drop-shadow-xl')
+		newScore.classList.add(
+			'bg-[#6e5235]',
+			'w-[90%]',
+			'h-[150px]',
+			'p-4',
+			'my-4',
+			'mx-auto',
+			'rounded-[5px]',
+			'drop-shadow-xl'
+		)
 		if (isAppend) timesList.append(newScore)
 		else timesList.prepend(newScore)
 	}

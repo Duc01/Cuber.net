@@ -1,5 +1,5 @@
-import { Scrambow } from "scrambow"
-import { ScrambleDisplay } from "scramble-display"
+import { Scrambow } from 'scrambow'
+import { ScrambleDisplay } from 'scramble-display'
 
 export class Cube {
 	constructor(cubeType) {
@@ -22,6 +22,7 @@ export class Cube {
 		return scramble
 	}
 
+	/** @param {string} currentScramble */
 	threeByThreeDisplay(currentScramble) {
 		const el = new ScrambleDisplay()
 		el.event = '333'
