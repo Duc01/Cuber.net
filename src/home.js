@@ -1,8 +1,16 @@
 import { Timer } from './Timer'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
-import { collection, doc, query, getDocs, orderBy, limit } from 'firebase/firestore'
+import {
+	collection,
+	doc,
+	query,
+	getDocs,
+	orderBy,
+	limit
+} from 'firebase/firestore'
 import { auth, db } from './index'
 import { Cube } from './Cube'
+import { loadLocalScores } from './loadLocalScores'
 
 const timerElem = document.querySelector('#timer') // timer display
 const playArea = document.querySelector('#play-area') // central area
@@ -29,7 +37,7 @@ onAuthStateChanged(auth, async (user) => {
 		const colRef = collection(userDoc, 'scores')
 		const data = query(colRef, orderBy('datetime', 'desc'), limit(10))
 		const docsSnap = await getDocs(data)
-		docsSnap.forEach(doc => {
+		docsSnap.forEach((doc) => {
 			myTimer.addScoreToList(doc.data(), true)
 		})
 	} else if (!user) {
@@ -42,6 +50,8 @@ onAuthStateChanged(auth, async (user) => {
 // if scramble is null when timer is stopped then an alert should be triggered
 const myTimer = new Timer(timerElem, null, scoresArray)
 
+loadLocalScores(myTimer)
+
 // creating new scramble
 function newScramble() {
 	const generatedScramble = cubeInstance.generateScramble()
@@ -52,7 +62,6 @@ function newScramble() {
 	const scrambleVisual = generatedScramble[1]
 	scrambleDisplayBox.innerHTML = ''
 	scrambleDisplayBox.appendChild(scrambleVisual)
-
 }
 newScramble() // generating new scramble on intial load
 
@@ -69,7 +78,6 @@ playArea.addEventListener('keydown', (e) => {
 		if (myTimer.stop()) newScramble()
 	}
 })
-
 
 signOutBtn.addEventListener('click', () => signOut(auth))
 
