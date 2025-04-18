@@ -1,6 +1,13 @@
 import { Timer } from './Timer'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
-import { collection, doc, query, getDocs, orderBy, limit } from 'firebase/firestore'
+import {
+	collection,
+	doc,
+	query,
+	getDocs,
+	orderBy,
+	limit
+} from 'firebase/firestore'
 import { auth, db } from './index'
 import { Cube } from './Cube'
 
@@ -27,9 +34,9 @@ onAuthStateChanged(auth, async (user) => {
 		// loading existing scores
 		const userDoc = doc(db, 'users', auth.currentUser.uid)
 		const colRef = collection(userDoc, 'scores')
-		const data = query(colRef, orderBy('datetime', 'desc'), limit(10))
+		const data = query(colRef, orderBy('datetime', 'desc'), limit(12))
 		const docsSnap = await getDocs(data)
-		docsSnap.forEach(doc => {
+		docsSnap.forEach((doc) => {
 			myTimer.addScoreToList(doc.data(), true)
 		})
 	} else if (!user) {
@@ -52,7 +59,6 @@ function newScramble() {
 	const scrambleVisual = generatedScramble[1]
 	scrambleDisplayBox.innerHTML = ''
 	scrambleDisplayBox.appendChild(scrambleVisual)
-
 }
 newScramble() // generating new scramble on intial load
 
@@ -69,7 +75,6 @@ playArea.addEventListener('keydown', (e) => {
 		if (myTimer.stop()) newScramble()
 	}
 })
-
 
 signOutBtn.addEventListener('click', () => signOut(auth))
 
