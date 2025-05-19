@@ -1,5 +1,4 @@
 import localforage from 'localforage'
-import { db, auth } from './index'
 import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore'
 
 export class Timer {
@@ -87,7 +86,7 @@ export class Timer {
 		else timesList.prepend(newScore)
 	}
 
-	saveScoreFirebase() {
+	saveScoreFirebase(db, auth) {
 		const scoreData = this.createScoreData()
 		// location to user
 		const userData = doc(db, 'users', auth.currentUser.uid)
@@ -103,14 +102,14 @@ export class Timer {
 		this.addScoreToList(scoreData) // appending new score to display
 	}
 
-	stop() {
+	stop(db, auth) {
 		// returning false for use in home.js
 		if (!this.interval) return false
 		// stopping timer and displaying final time
 		window.clearInterval(this.interval)
 		this.displayOutput()
 		// saving score
-		if (auth.currentUser) this.saveScoreFirebase()
+		if (auth.currentUser) this.saveScoreFirebase(db, auth)
 		else if (!auth.currentUser) this.saveScoreLocalStorage()
 		// making sure timer cannot be started again within second
 		// this is to avoid timer starting on releasing space
