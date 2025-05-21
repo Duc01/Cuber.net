@@ -2,7 +2,7 @@
 module.exports = {
 	content: [
 		'./public/**.html',
-		'./public/dist/home.bundle.js,',
+		'./public/dist/home.bundle.js',
 		'./public/dist/login.bundle.js'
 	],
 	theme: {
