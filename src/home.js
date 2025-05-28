@@ -10,7 +10,7 @@ import {
 } from 'firebase/firestore'
 import { auth, db } from './index'
 import { Cube } from './Cube'
-import * as localScoreFunctions from './loadLocalScores'
+import { loadLocalScores } from './loadLocalScores'
 
 const timerElem = document.querySelector('#timer') // timer display
 const playArea = document.querySelector('#play-area') // central area
@@ -25,8 +25,6 @@ const reScrambleBtn = document.querySelector('#rescramble')
 const scrambleDisplayBox = document.querySelector('#scramble-display')
 
 let scoresArray = []
-
-/** @todo Implement functions to load local scores in cloud upon login */
 
 // displaying log in or log out buttons
 onAuthStateChanged(auth, async (user) => {
@@ -52,7 +50,7 @@ onAuthStateChanged(auth, async (user) => {
 // if scramble is null when timer is stopped then an alert should be triggered
 const myTimer = new Timer(timerElem, null, scoresArray)
 
-localScoreFunctions.displayLocalScores(myTimer)
+loadLocalScores(myTimer)
 
 // creating new scramble
 function newScramble() {
@@ -77,7 +75,7 @@ playArea.addEventListener('keydown', (e) => {
 	if (e.code === 'Space') {
 		// checking if the function returned true
 		// making sure new scramble is only generated when timer is stopped
-		if (myTimer.stop(db, auth)) newScramble()
+		if (myTimer.stop()) newScramble()
 	}
 })
 
