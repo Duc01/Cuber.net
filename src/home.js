@@ -3,14 +3,14 @@ import { onAuthStateChanged, signOut } from 'firebase/auth'
 import {
 	collection,
 	doc,
-	query,
 	getDocs,
+	limit,
 	orderBy,
-	limit
+	query
 } from 'firebase/firestore'
 import { auth, db } from './index'
 import { Cube } from './Cube'
-import { loadLocalScores } from './loadLocalScores'
+import { LocalScoreManager } from './LocalScoreManager'
 
 const timerElem = document.querySelector('#timer') // timer display
 const playArea = document.querySelector('#play-area') // central area
@@ -49,28 +49,27 @@ onAuthStateChanged(auth, async (user) => {
 // setting scramble to null to be updated later
 // if scramble is null when timer is stopped then an alert should be triggered
 const myTimer = new Timer(timerElem, null, scoresArray)
+const localScores = new LocalScoreManager(myTimer)
 
-loadLocalScores(myTimer)
+localScores.displayLocalScores()
 
-// creating new scramble
 function newScramble() {
 	const generatedScramble = cubeInstance.generateScramble()
 	scrambleText.innerHTML = generatedScramble[0]
-	// updating the new scrambe for the Timer function
+	// updating the new scramble for the Timer function
 	myTimer.updateScramble(generatedScramble[0])
 
 	const scrambleVisual = generatedScramble[1]
 	scrambleDisplayBox.innerHTML = ''
 	scrambleDisplayBox.appendChild(scrambleVisual)
 }
-newScramble() // generating new scramble on intial load
 
-// timer start
+newScramble() // generating new scramble on initial load
+
 playArea.addEventListener('keyup', (e) => {
 	if (e.code === 'Space') myTimer.start()
 })
 
-// timer stop
 playArea.addEventListener('keydown', (e) => {
 	if (e.code === 'Space') {
 		// checking if the function returned true
