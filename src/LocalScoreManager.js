@@ -15,7 +15,7 @@ export class LocalScoreManager {
 			.then(() => console.log('Added all local scores to list'))
 	}
 
-	/** @todo Limit uploaded scores to a certain count to prevent excessive writes*/
+	//! Limit score writes to firebase to prevent excessive usage
 	async uploadScoresToFirebase(uid) {
 		// verify UID
 		if (!uid || typeof uid !== 'string')
@@ -39,6 +39,7 @@ export class LocalScoreManager {
 					scoreUploadsFailed++
 				}
 
+				//! I have no idea what this uploadPromise thing means
 				const uploadPromise = addDoc(scoresCollection, scoreData)
 					.then(() => {
 						console.log(`Added score ${localKey} to Firebase`)
@@ -60,6 +61,14 @@ export class LocalScoreManager {
 					`Summary: Found ${scoresInLocalForage} scores locally. Successfully uploaded: ${scoresInLocalForage}. Failed/Skipped: ${scoreUploadsFailed}.`
 				)
 			}
+			localforage
+				.clear()
+				.catch((e) =>
+					console.error(
+						'An error occured while clearing local storage',
+						e
+					)
+				)
 		} catch (e) {
 			console.error(
 				`An critical error occurred during the score upload process for UID ${uid}:`,
