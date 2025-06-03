@@ -49,9 +49,9 @@ onAuthStateChanged(auth, async (user) => {
 // setting scramble to null to be updated later
 // if scramble is null when timer is stopped then an alert should be triggered
 const myTimer = new Timer(timerElem, null, scoresArray)
-const localScores = new LocalScoreManager(myTimer)
+const localScores = new LocalScoreManager()
 
-localScores.displayLocalScores()
+localScores.displayLocalScores(myTimer)
 
 function newScramble() {
 	const generatedScramble = cubeInstance.generateScramble()
