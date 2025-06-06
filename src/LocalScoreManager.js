@@ -39,10 +39,10 @@ export class LocalScoreManager {
 					scoreUploadsFailed++
 				}
 
-				//! I have no idea what this uploadPromise thing means
 				const uploadPromise = addDoc(scoresCollection, scoreData)
 					.then(() => {
 						console.log(`Added score ${localKey} to Firebase`)
+						localforage.removeItem(localKey)
 						scoresUploaded++
 					})
 					.catch((err) => {
@@ -61,14 +61,6 @@ export class LocalScoreManager {
 					`Summary: Found ${scoresInLocalForage} scores locally. Successfully uploaded: ${scoresInLocalForage}. Failed/Skipped: ${scoreUploadsFailed}.`
 				)
 			}
-			localforage
-				.clear()
-				.catch((e) =>
-					console.error(
-						'An error occured while clearing local storage',
-						e
-					)
-				)
 		} catch (e) {
 			console.error(
 				`An critical error occurred during the score upload process for UID ${uid}:`,
