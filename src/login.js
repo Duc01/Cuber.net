@@ -11,13 +11,7 @@ const modalCancel = document.querySelector('#modal-cancel')
 
 const scoreManager = new LocalScoreManager()
 
-googleSignInBtn.addEventListener('click', async () => {
-	if (await localforage.length()) {
-		modal.classList.remove('hidden')
-	}
-})
-
-modalAccept.addEventListener('click', async () => {
+function signInWithGoogle() {
 	const provider = new GoogleAuthProvider()
 	signInWithPopup(auth, provider).then(async (result) => {
 		const user = result.user
@@ -31,7 +25,15 @@ modalAccept.addEventListener('click', async () => {
 		console.log(user.uid)
 		window.location.href = '/'
 	})
+}
+
+googleSignInBtn.addEventListener('click', async () => {
+	if (await localforage.length()) {
+		modal.classList.remove('hidden')
+	} else signInWithGoogle()
 })
+
+modalAccept.addEventListener('click', async () => signInWithGoogle())
 
 modalCancel.addEventListener('click', () => {
 	modal.classList.add('hidden')
