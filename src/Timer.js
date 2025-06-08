@@ -1,6 +1,7 @@
 import localforage from 'localforage'
 import { db, auth } from './index'
 import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore'
+import * as timestamp from 'unix-timestamp'
 
 export class Timer {
 	interval = null
@@ -56,8 +57,7 @@ export class Timer {
 				currentDate.getMinutes() +
 				':' +
 				currentDate.getSeconds(),
-			// server timestamp for use in firebase. MIGHT BE USELESS
-			timestamp: serverTimestamp()
+			timestamp: timestamp.now()
 		}
 		if (score.scramble) return score
 		else alert('Scramble not updated. Try again')
