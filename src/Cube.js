@@ -15,6 +15,7 @@ export class Cube {
 		}
 	}
 
+	/** @return {string} */
 	threeByThreeScramble() {
 		let threeXthree = new Scrambow()
 		let scrambleObject = threeXthree.get(1)[0]
@@ -22,7 +23,8 @@ export class Cube {
 		return scramble
 	}
 
-	/** @param {string} currentScramble */
+	/** @param {string} currentScramble
+	 * @return {ScrambleDisplay} */
 	threeByThreeDisplay(currentScramble) {
 		const el = new ScrambleDisplay()
 		el.event = '333'

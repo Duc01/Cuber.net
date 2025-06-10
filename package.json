@@ -13,8 +13,10 @@
 	},
 	"dependencies": {
 		"firebase": "^9.17.2",
+		"localforage": "^1.10.0",
 		"scramble-display": "^0.5.4",
-		"scrambow": "^1.7.0"
+		"scrambow": "^1.7.0",
+		"unix-timestamp": "^1.1.0"
 	},
 	"name": "pacecuber",
 	"description": "This project has been created using **webpack-cli**, you can now run",
