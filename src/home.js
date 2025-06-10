@@ -35,7 +35,7 @@ onAuthStateChanged(auth, async (user) => {
 		// loading existing scores
 		const userDoc = doc(db, 'users', auth.currentUser.uid)
 		const colRef = collection(userDoc, 'scores')
-		const data = query(colRef, orderBy('datetime', 'desc'), limit(12))
+		const data = query(colRef, orderBy('timestamp', 'desc'), limit(12))
 		const docsSnap = await getDocs(data)
 		docsSnap.forEach((doc) => {
 			myTimer.addScoreToList(doc.data(), true)
