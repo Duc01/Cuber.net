@@ -9,33 +9,28 @@
 		<script src="dist/home.bundle.js" defer></script>
 	</head>
 
-	<body>
+	<body class="text-text font-jetbrainsmono">
 		<nav
 			class="flex content-center justify-around items-center h-[8vh] min-h-[70px] max-h-[150px] bg-nav"
 		>
 			<button
-				class="text-black mr-16 ml-auto rounded-[3px] bg-[#db9f5e] px-[5px] py-[3px] border-none z-10 sign-in"
+				class="mr-16 ml-auto rounded-[0.25rem] bg-secondary px-2 py-1 border-none z-10 drop-shadow-lg sign-in"
 				onclick="document.location.href='login.html'"
 			>
 				Sign in
 			</button>
 			<button
-				class="sign-out text-black mr-16 ml-auto rounded-[3px] bg-[#db9f5e] px-[5px] py-[3px] border-none z-10"
+				class="sign-out mr-16 ml-auto rounded-[0.25rem] bg-secondary px-2 py-1 border-none z-10"
 				hidden
 			>
 				Sign Out
 			</button>
 		</nav>
-		<section
-			id="main-content"
-			class="grid grid-cols-primary-grid text-white"
-		>
+		<section id="main-content" class="grid grid-cols-primary-grid">
 			<section
-				class="w-max-[400px] w-min-[200px] h-[92vh] w-full overflow-x-hidden bg-side-menu"
-			>
-				<h1 class="font-semibold m-3 text-center text-xl">Times</h1>
-				<section id="times"></section>
-			</section>
+				class="w-max-[25rem] w-min-[200px] h-[92vh] w-full overflow-x-hidden bg-side-menu"
+				id="times"
+			></section>
 			<section
 				id="play-area"
 				class="inset-0 bg-background-main flex justify-center items-center flex-col"
@@ -43,9 +38,11 @@
 			>
 				<h2 class="scramble text-2xl">Scramble</h2>
 				<button id="rescramble">Rescramble</button>
-				<h1 id="timer" class="text-9xl m-2">00:00</h1>
+				<h1 id="timer" class="text-9xl m-2 font-spacemono font-bold">
+					00:00.00
+				</h1>
 				<div
-					class="w-[300px] h-[300px] absolute bg-side-menu bottom-0 right-0 rounded-[5px] m-2"
+					class="w-[300px] h-[300px] border-[#F9E5D726] border bg-side-menu rounded-[5px] m-4 p-2 shadow-xl absolute bottom-0 right-0"
 					id="scramble-display"
 				></div>
 			</section>

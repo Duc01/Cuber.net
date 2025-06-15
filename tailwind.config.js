@@ -8,13 +8,20 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
+				text: '#F9E5D7',
 				'background-main': '#282523',
-				'side-menu': '#50433a',
+				'side-menu': '#211E1E',
+				primary: '#C07F24',
+				secondary: '#7D9C16',
 				nav: '#363230'
 			},
 			gridTemplateColumns: {
 				// Simple 16 column grid
 				'primary-grid': '18.5vw 1fr'
+			},
+			fontFamily: {
+				spacemono: ['Space Mono', 'monospace'],
+				jetbrainsmono: ['JetBrains Mono', 'monospace']
 			}
 		}
 	},

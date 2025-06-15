@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* @theme {
+	--font-delagothicone: 'Dela Gothic One', sans-serif;
+	--font-jetbrainsmono: 'JetBrains Mono', monospace;
+} */
 
 * {
 	margin: 0;
@@ -8,7 +14,11 @@
 	box-sizing: border-box;
 }
 
-scramble-display {
+/*body {*/
+/*	color: #F9E5D7;*/
+/*}*/
+
+#scramble-display {
 	width: inherit;
 	height: inherit;
 }
