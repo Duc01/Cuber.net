@@ -1,7 +1,7 @@
 import localforage from 'localforage'
 import { db, auth } from './index'
 import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore'
-import * as timestamp from 'unix-timestamp'
+import timestamp from 'unix-timestamp'
 
 export class Timer {
 	interval = null
@@ -80,7 +80,7 @@ export class Timer {
 			'p-4',
 			'my-4',
 			'mx-auto',
-			'rounded-[0.25rem]',
+			'rounded-lg',
 			'drop-shadow-xl'
 		)
 		if (isAppend) timesList.append(newScore)
