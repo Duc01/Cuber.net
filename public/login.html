@@ -1,68 +1,68 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Login</title>
-	<script src="dist/login.bundle.js" defer></script>
-	<link rel="stylesheet" href="dist/output.css" />
-</head>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Login</title>
+		<script src="dist/login.bundle.js" defer></script>
+		<link rel="stylesheet" href="dist/output.css" />
+	</head>
 
-<body>
-<!-- Login Modal main div-->
-<!-- Copied from some random guy, customise when possible -->
-<div class="fixed z-10 inset-0 overflow-y-auto hidden" id="modal">
-	<div
-		class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0"
-	>
-		<div class="fixed inset-0 transition-opacity">
-			<div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-		</div>
-		<span
-			class="hidden sm:inline-block sm:align-middle sm:h-screen"
-		></span>
-		<div
-			class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
-			id="modal-content"
-		>
-			<div class="sm:flex sm:items-start">
-				<div
-					class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10"
-				>
-					<svg
-						class="h-6 w-6 text-green-600"
-						stroke="currentColor"
-						fill="none"
-						viewBox="0 0 24 24"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M5 13l4 4L19 7"
-						></path>
-					</svg>
+	<body class="h-dvh bg-background-main font-jetbrainsmono text-text">
+		<!-- Login Modal main div-->
+		<!-- Copied from some random guy, customise when possible -->
+		<div class="fixed z-10 inset-0 overflow-y-auto hidden" id="modal">
+			<div
+				class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0"
+			>
+				<div class="fixed inset-0 transition-opacity">
+					<div class="absolute inset-0 bg-gray-500 opacity-75"></div>
 				</div>
+				<span
+					class="hidden sm:inline-block sm:align-middle sm:h-screen"
+				></span>
 				<div
-					class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left"
+					class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+					id="modal-content"
 				>
-					<h3
-						class="text-lg leading-6 font-medium text-gray-900"
-					>
-						Local Scores found!
-					</h3>
-					<div class="mt-2">
-						<p class="text-sm leading-5 text-gray-500">
-							It looks like you already have scores saved
-							locally! Signing in would mean these scores
-							are all uploaded to the cloud. Would you
-							like to proceed?
-						</p>
+					<div class="sm:flex sm:items-start">
+						<div
+							class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10"
+						>
+							<svg
+								class="h-6 w-6 text-green-600"
+								stroke="currentColor"
+								fill="none"
+								viewBox="0 0 24 24"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M5 13l4 4L19 7"
+								></path>
+							</svg>
+						</div>
+						<div
+							class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left"
+						>
+							<h3
+								class="text-lg leading-6 font-medium text-gray-900"
+							>
+								Local Scores found!
+							</h3>
+							<div class="mt-2">
+								<p class="text-sm leading-5 text-gray-500">
+									It looks like you already have scores saved
+									locally! Signing in would mean these scores
+									are all uploaded to the cloud. Would you
+									like to proceed?
+								</p>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+					<div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
 						<span
 							class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto"
 						>
@@ -74,9 +74,9 @@
 								Continue
 							</button>
 						</span>
-				<span
-					class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto"
-				>
+						<span
+							class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto"
+						>
 							<button
 								type="button"
 								id="modal-cancel"
@@ -85,12 +85,18 @@
 								Cancel
 							</button>
 						</span>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
-
-<button id="google-sign-in">Sign In With Google</button>
-<button class="sign-out" hidden>Log out</button>
-</body>
+		<section class="flex items-center justify-center h-full">
+			<div
+				class="border rounded-xl bg-side-menu p-4 m-4 border-[#F9E5D726]"
+			>
+				<div class="h-100 w-100 bg-pink-100"></div>
+				<button id="google-sign-in">Sign In With Google</button>
+				<button id="sign-out" hidden>Log out</button>
+			</div>
+		</section>
+	</body>
 </html>
