@@ -13,6 +13,7 @@ module.exports = {
 				'side-menu': '#211E1E',
 				primary: '#C07F24',
 				secondary: '#7D9C16',
+				'secondary-hover': '#586F0E',
 				nav: '#363230'
 			},
 			gridTemplateColumns: {
