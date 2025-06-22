@@ -11,6 +11,7 @@ import {
 import { auth, db } from './index'
 import { Cube } from './Cube'
 import { LocalScoreManager } from './LocalScoreManager'
+import { Stats } from './Stats'
 
 const timerElem = document.querySelector('#timer') // timer display
 const playArea = document.querySelector('#play-area') // central area
@@ -45,6 +46,9 @@ onAuthStateChanged(auth, async (user) => {
 		signOutBtn.setAttribute('hidden', true)
 	}
 })
+
+const stats = new Stats()
+console.log(await stats.getLocalScores())
 
 // setting scramble to null to be updated later
 // if scramble is null when timer is stopped then an alert should be triggered
