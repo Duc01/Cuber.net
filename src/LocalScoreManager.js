@@ -10,7 +10,7 @@ export class LocalScoreManager {
 	displayLocalScores(myTimer) {
 		localforage
 			.iterate((score, _key, i) => {
-				if (i < 11) myTimer.addScoreToList(score)
+				if (i <= 12) myTimer.addScoreToList(score)
 			})
 			.then(() => console.log('Added all local scores to list'))
 	}
