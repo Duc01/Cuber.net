@@ -36,29 +36,61 @@ export class Stats {
 	// }
 
 	// PLEASE FOR THE LOVE OF GOD USE AWAIT WHEN CALLING THIS FUNCTION
-	async getLocalScores() {
+	/**
+	 *
+	 * @param {Number} index
+	 * @returns Array
+	 */
+	async getLocalScores(index) {
 		let allTimes = []
-		let timesList = []
-		let promises = []
-		await localforage.iterate((score) => {
-			allTimes.push(score)
-		})
-		for (let i = 0; i < 12; i++) {
-			try {
-				timesList.push({
-					time: allTimes[i].time,
-					timestamp: allTimes[i].timestamp
-				})
-			} catch (error) {
-				allTimes = []
-				allTimes.forEach((time) => {
-					timesList.push({
-						time: time.time,
-						timestamp: time.timestamp
-					})
-				})
+		let scoresList = []
+		await localforage.iterate((score, _key, index) => {
+			if (index === 12) {
+				return scoresList
 			}
-		}
-		return timesList
+
+			scoresList.push({
+				time: new Date(score.time).getTime, // getTime function returns time in milliseconds
+				timestamp: score.timestamp
+			})
+		})
+		return scoresList
+	}
+
+	/**
+	 *
+	 * @param {any[]} scoreArr
+	 * @returns {string}
+	 */
+	getAverageScores(scoreArr) {
+		let times = []
+		scoreArr.forEach((score) => {
+			times.push(score.time)
+		})
+		const timesInSec = times.map((time) => {
+			let pieces = time.split(':')
+			switch (pieces.length) {
+				case 3: // HH:MM:SS
+					let hours = parseInt(pieces[0], 10)
+					let minutes = parseInt(pieces[1], 10) + hours * 60
+					return minutes * 60 + parseFloat(pieces[2])
+				case 2: // MM:SS
+					let mins = parseInt(pieces[0], 10)
+					return mins * 60 + parseFloat(pieces[1])
+				default: // SS (or invalid, but we'll treat it as seconds)
+					return parseFloat(pieces[0])
+			}
+		})
+
+		const totalSeconds = timesInSec.reduce(
+			(accumulator, currentValue) => accumulator + currentValue,
+			0
+		)
+		const averageInSec = totalSeconds / timesInSec.length
+
+		let avgTime = new Date(0)
+		avgTime.setSeconds(averageInSec)
+		const avgTimeString = avgTime.toISOString().substring(14, 22)
+		return avgTimeString
 	}
 }
