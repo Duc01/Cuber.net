@@ -38,19 +38,19 @@ export class Stats {
 	// PLEASE FOR THE LOVE OF GOD USE AWAIT WHEN CALLING THIS FUNCTION
 	/**
 	 *
-	 * @param {Number} index
+	 * @param {Number} limit
 	 * @returns Array
 	 */
-	async getLocalScores(index) {
+	async getLocalScores(limit) {
 		let allTimes = []
 		let scoresList = []
 		await localforage.iterate((score, _key, index) => {
-			if (index === 12) {
+			if (index === limit - 1) {
 				return scoresList
 			}
 
 			scoresList.push({
-				time: new Date(score.time).getTime, // getTime function returns time in milliseconds
+				time: score.time, // Keep time as string for split() method
 				timestamp: score.timestamp
 			})
 		})
@@ -67,6 +67,7 @@ export class Stats {
 		scoreArr.forEach((score) => {
 			times.push(score.time)
 		})
+		console.log(scoreArr)
 		const timesInSec = times.map((time) => {
 			let pieces = time.split(':')
 			switch (pieces.length) {
@@ -89,8 +90,28 @@ export class Stats {
 		const averageInSec = totalSeconds / timesInSec.length
 
 		let avgTime = new Date(0)
-		avgTime.setSeconds(averageInSec)
+		avgTime.setMilliseconds(averageInSec * 1000)
 		const avgTimeString = avgTime.toISOString().substring(14, 22)
 		return avgTimeString
+	}
+
+	/**
+	 *
+	 * @param {HTMLElement} ao5Elem
+	 * @param {HTMLElement} ao12Elem
+	 */
+	async pushAvgToHTML(ao5Elem, ao12Elem) {
+		const scoreArr = await this.getLocalScores(14)
+
+		if (scoreArr.length >= 5 && scoreArr.length < 12) {
+			const ao5Avg = this.calculateAvgTime(scoreArr.slice(0, 5))
+			ao5Elem.textContent = ao5Avg
+		} else if (scoreArr.length >= 12) {
+			const ao5Avg = this.calculateAvgTime(scoreArr.slice(0, 5))
+			ao5Elem.textContent = ao5Avg
+
+			const ao12Avg = this.calculateAvgTime(scoreArr.slice(0, 12))
+			ao12Elem.textContent = ao12Avg
+		}
 	}
 }
