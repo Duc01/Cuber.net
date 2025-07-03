@@ -62,7 +62,7 @@ export class Stats {
 	 * @param {any[]} scoreArr
 	 * @returns {string}
 	 */
-	getAverageScores(scoreArr) {
+	calculateAvgTime(scoreArr) {
 		let times = []
 		scoreArr.forEach((score) => {
 			times.push(score.time)
