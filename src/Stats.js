@@ -36,6 +36,7 @@ export class Stats {
 	// }
 
 	// PLEASE FOR THE LOVE OF GOD USE AWAIT WHEN CALLING THIS FUNCTION
+	// This bitch ass library can only get items in ascending order when using localforage.iterate(), not descending because that would make too much sense
 	/**
 	 *
 	 * @param {Number} limit
@@ -44,6 +45,17 @@ export class Stats {
 	async getLocalScores(limit) {
 		let allTimes = []
 		let scoresList = []
+		const keys = parseFloat(localforage.keys())
+		const scoreCount = keys.length()
+		for (let i = 0; i <= limit - 1; i++) {
+			if (scoreCount >= limit) {
+				scoresList.push(
+					await localforage.getItem(keys[scoreCount - (1 + i)])
+				)
+			} else if (scoreCount < limit) {
+				scoresList.unshift(await localforage.getItem(keys[i]))
+			}
+		}
 		await localforage.iterate((score, _key, index) => {
 			if (index === limit - 1) {
 				return scoresList
