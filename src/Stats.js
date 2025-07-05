@@ -45,27 +45,20 @@ export class Stats {
 	async getLocalScores(limit) {
 		let allTimes = []
 		let scoresList = []
-		const keys = parseFloat(localforage.keys())
-		const scoreCount = keys.length()
-		for (let i = 0; i <= limit - 1; i++) {
-			if (scoreCount >= limit) {
+		const keys = await localforage.keys()
+		console.log(keys.length)
+		const scoreCount = keys.length
+		if (scoreCount >= limit) {
+			for (let i = 0; i < limit; i++) {
 				scoresList.push(
 					await localforage.getItem(keys[scoreCount - (1 + i)])
 				)
-			} else if (scoreCount < limit) {
+			}
+		} else if (scoreCount < limit) {
+			for (let i = 0; i < scoreCount; i++) {
 				scoresList.unshift(await localforage.getItem(keys[i]))
 			}
 		}
-		await localforage.iterate((score, _key, index) => {
-			if (index === limit - 1) {
-				return scoresList
-			}
-
-			scoresList.push({
-				time: score.time, // Keep time as string for split() method
-				timestamp: score.timestamp
-			})
-		})
 		return scoresList
 	}
 

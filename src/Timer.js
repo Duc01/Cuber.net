@@ -99,7 +99,7 @@ export class Timer {
 
 	saveScoreLocalStorage() {
 		const scoreData = this.createScoreData()
-		localforage.setItem(scoreData.datetime, scoreData)
+		localforage.setItem(scoreData.timestamp, scoreData)
 		this.addScoreToList(scoreData) // appending new score to display
 	}
 
