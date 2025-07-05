@@ -13,18 +13,26 @@
 		<nav
 			class="flex content-center justify-around items-center h-[8vh] min-h-[70px] max-h-[150px] bg-nav"
 		>
-			<button
-				class="sign-in mr-16 ml-auto rounded-md border border-transparent px-4 py-2 bg-secondary text-base leading-6 font-medium text-white shadow-sm hover:bg-secondary-hover focus:outline-none focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-				onclick="document.location.href='login.html'"
-			>
-				Sign in
-			</button>
-			<button
-				class="sign-out mr-16 ml-auto rounded-[0.25rem] bg-secondary px-2 py-1 border-none z-10"
-				hidden
-			>
-				Sign Out
-			</button>
+			<div class="40vw flex justify-around content mr-16 ml-auto">
+				<button
+					class="mr-8 ml-auto rounded-[0.25] px-2 py-1 border-none z-10"
+					onclick="document.location.href='stats.html'"
+				>
+					Stats
+				</button>
+				<button
+					class="sign-in rounded-md border border-transparent px-4 py-2 bg-secondary text-base leading-6 font-medium text-white shadow-sm hover:bg-secondary-hover focus:outline-none focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+					onclick="document.location.href='login.html'"
+				>
+					Sign in
+				</button>
+				<button
+					class="sign-out mr-16 ml-auto rounded-[0.25rem] bg-secondary px-2 py-1 border-none z-10"
+					hidden
+				>
+					Sign Out
+				</button>
+			</div>
 		</nav>
 		<section id="main-content" class="grid grid-cols-primary-grid">
 			<section
