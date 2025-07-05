@@ -46,7 +46,6 @@ export class Stats {
 		let allTimes = []
 		let scoresList = []
 		const keys = await localforage.keys()
-		console.log(keys.length)
 		const scoreCount = keys.length
 		if (scoreCount >= limit) {
 			for (let i = 0; i < limit; i++) {
@@ -72,7 +71,6 @@ export class Stats {
 		scoreArr.forEach((score) => {
 			times.push(score.time)
 		})
-		console.log(scoreArr)
 		const timesInSec = times.map((time) => {
 			let pieces = time.split(':')
 			switch (pieces.length) {
