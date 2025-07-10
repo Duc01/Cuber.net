@@ -7,6 +7,7 @@ export class Timer {
 	interval = null
 	startTime = null
 	timeout = null
+	isTimeoutActive = false
 
 	/**
 	 * @param {HTMLElement} outputElem
@@ -31,13 +32,6 @@ export class Timer {
 	// format date to minutes:seconds.subseconds
 	formatMS(ms) {
 		return new Date(ms).toISOString().substring(14, 22)
-	}
-
-	start() {
-		if (this.interval) return
-		this.startTime = Date.now()
-		this.displayOutput()
-		this.interval = window.setInterval(() => this.displayOutput(), 10)
 	}
 
 	createScoreData() {
@@ -103,9 +97,16 @@ export class Timer {
 		this.addScoreToList(scoreData) // appending new score to display
 	}
 
+	start() {
+		if (this.interval) return
+		this.startTime = Date.now()
+		this.displayOutput()
+		this.interval = window.setInterval(() => this.displayOutput(), 10)
+	}
+
 	stop() {
 		// returning false for use in home.js
-		if (!this.interval) return false
+		if (!this.interval || this.isTimeoutActive) return
 		// stopping timer and displaying final time
 		window.clearInterval(this.interval)
 		this.displayOutput()
@@ -114,9 +115,12 @@ export class Timer {
 		else if (!auth.currentUser) this.saveScoreLocalStorage()
 		// making sure timer cannot be started again within second
 		// this is to avoid timer starting on releasing space
+		this.isTimeoutActive = true
 		this.timeout = window.setTimeout(() => {
 			this.interval = null
+			this.isTimeoutActive = false
+
+			return true // returns true when timer is stopped
 		}, 2000)
-		return true // returns true when timer is stopped
 	}
 }
