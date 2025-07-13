@@ -71,6 +71,7 @@ export class Stats {
 		scoreArr.forEach((score) => {
 			times.push(score.time)
 		})
+		// dawg I don't know this
 		const timesInSec = times.map((time) => {
 			let pieces = time.split(':')
 			switch (pieces.length) {
@@ -98,23 +99,11 @@ export class Stats {
 		return avgTimeString
 	}
 
-	/**
-	 *
-	 * @param {HTMLElement} ao5Elem
-	 * @param {HTMLElement} ao12Elem
-	 */
-	async pushAvgToHTML(ao5Elem, ao12Elem) {
-		const scoreArr = await this.getLocalScores(14)
+	async getAvgOfScores(limit) {
+		const scoreArr = await this.getLocalScores(limit)
+		console.log(scoreArr)
 
-		if (scoreArr.length >= 5 && scoreArr.length < 12) {
-			const ao5Avg = this.calculateAvgTime(scoreArr.slice(0, 5))
-			ao5Elem.textContent = ao5Avg
-		} else if (scoreArr.length >= 12) {
-			const ao5Avg = this.calculateAvgTime(scoreArr.slice(0, 5))
-			ao5Elem.textContent = ao5Avg
-
-			const ao12Avg = this.calculateAvgTime(scoreArr.slice(0, 12))
-			ao12Elem.textContent = ao12Avg
-		}
+		const calculatedAvg = this.calculateAvgTime(scoreArr)
+		return calculatedAvg
 	}
 }

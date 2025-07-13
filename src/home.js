@@ -50,7 +50,13 @@ onAuthStateChanged(auth, async (user) => {
 const stats = new Stats()
 const ao5Elem = document.querySelector('#ao5')
 const ao12Elem = document.querySelector('#ao12')
-stats.pushAvgToHTML(ao5Elem, ao12Elem)
+// stats.pushAvgToHTML(ao5Elem, ao12Elem)
+stats.getAvgOfScores(5).then((res) => {
+	ao5Elem.textContent = res
+})
+stats.getAvgOfScores(12).then((res) => {
+	ao12Elem.textContent = res
+})
 
 // setting scramble to null to be updated later
 // if scramble is null when timer is stopped then an alert should be triggered
