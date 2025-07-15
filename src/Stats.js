@@ -2,10 +2,12 @@ import {
 	collection,
 	doc,
 	getDocs,
-	limit,
 	orderBy,
-	query
+	query,
+	limit
 } from 'firebase/firestore'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth, db } from './index'
 import localforage from 'localforage'
 
 export class Stats {
@@ -18,17 +20,16 @@ export class Stats {
 
 	/* If firebaseScores can be read it's fair to assume that the user is logged in
 	 * Hence local scores can be loaded into the local db for processing to avoid multiple reads and writes to the main server */
-	async getFirebaseScores(limit) {
+	async getFirebaseScores(limit_value) {
 		let timesList = []
-		const docsSnap = await getDocs(
-			query(
-				collection(
-					doc(db, 'users', this.firebaseUID, 'scores'),
-					orderBy('timestamp', 'desc'),
-					limit(limit)
-				)
-			)
+		const userDoc = doc(db, 'users', auth.currentUser.uid)
+		const colRef = collection(userDoc, 'scores')
+		const data = query(
+			colRef,
+			orderBy('timestamp', 'desc'),
+			limit(limit_value)
 		)
+		const docsSnap = await getDocs(data)
 		docsSnap.forEach((doc) => {
 			timesList.push(doc.data())
 		})
@@ -97,9 +98,35 @@ export class Stats {
 	}
 
 	async getAvgOfScores(limit) {
-		const scoreArr = await this.getLocalScores(limit)
-		console.log(scoreArr)
+		// if (typeof this.firebaseUID === 'string') {
+		// 	const scoreArr = await this.getFirebaseScores(limit)
+		// 	console.log(scoreArr)
+		// 	const calculatedAvg = this.calculateAvgTime(scoreArr)
+		// 	return calculatedAvg
+		// } else if (typeof this.firebaseUID === 'undefined') {
+		// 	const scoreArr = await this.getLocalScores(limit)
+		// 	console.log(scoreArr)
 
+		// 	const calculatedAvg = this.calculateAvgTime(scoreArr)
+		// 	return calculatedAvg
+		// } else {
+		// 	return new Error(
+		// 		`Invalid FirebaseUID of type ${typeof this.firebaseUID}`
+		// 	)
+		// }
+		var scoreArr = []
+		await new Promise(async (resolve, reject) => {
+			onAuthStateChanged(auth, async (user) => {
+				if (user) {
+					this.firebaseUID = auth.currentUser.uid
+					scoreArr = await this.getFirebaseScores(limit)
+				} else if (!user) {
+					scoreArr = await this.getLocalScores(limit)
+				}
+				resolve()
+			})
+		})
+		console.log(scoreArr)
 		const calculatedAvg = this.calculateAvgTime(scoreArr)
 		return calculatedAvg
 	}
