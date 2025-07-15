@@ -40,7 +40,8 @@ const config = {
 	experiments: {
 		topLevelAwait: true
 	},
-	watch: true
+	watch: true,
+	devtool: 'inline-source-map'
 }
 
 module.exports = () => {

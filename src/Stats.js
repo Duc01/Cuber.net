@@ -16,34 +16,31 @@ export class Stats {
 		this.firebaseUID = firebaseUID
 	}
 
-	// async readFirebaseScores(firebaseUID) {
-	// 	let timesList = []
-	// 	// duplication of work with onAuthStateChange in home.js
-	// 	const docsSnap = await getDocs(
-	// 		query(
-	// 			collection(doc(db, 'users', firebaseUID), 'scores'),
-	// 			orderBy('timestamp', 'desc'),
-	// 			limit(12)
-	// 		)
-	// 	)
-	// 	docsSnap.forEach((doc) => {
-	// 		timesList.push({
-	// 			time: doc.data().time,
-	// 			timestamp: doc.data().timestamp
-	// 		})
-	// 	})
-	// 	return timesList
-	// }
+	/* If firebaseScores can be read it's fair to assume that the user is logged in
+	 * Hence local scores can be loaded into the local db for processing to avoid multiple reads and writes to the main server */
+	async getFirebaseScores(limit) {
+		let timesList = []
+		const docsSnap = await getDocs(
+			query(
+				collection(
+					doc(db, 'users', this.firebaseUID, 'scores'),
+					orderBy('timestamp', 'desc'),
+					limit(limit)
+				)
+			)
+		)
+		docsSnap.forEach((doc) => {
+			timesList.push(doc.data())
+		})
+		return timesList
+	}
 
-	// PLEASE FOR THE LOVE OF GOD USE AWAIT WHEN CALLING THIS FUNCTION
-	// This bitch ass library can only get items in ascending order when using localforage.iterate(), not descending because that would make too much sense
 	/**
-	 *
+	 * get scores stored locally when
 	 * @param {Number} limit
 	 * @returns Array
 	 */
 	async getLocalScores(limit) {
-		let allTimes = []
 		let scoresList = []
 		const keys = await localforage.keys()
 		const scoreCount = keys.length
