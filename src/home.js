@@ -74,7 +74,7 @@ cubeInstance.cubeType = puzzleChangeDropdown.value
 
 // setting scramble to null to be updated later
 // if scramble is null when timer is stopped then an alert should be triggered
-const myTimer = new Timer(timerElem, null, scoresArray)
+const myTimer = new Timer(timerElem, null, scoresArray, puzzleChangeDropdown.value)
 const localScores = new LocalScoreManager()
 
 localScores.displayLocalScores(myTimer)
@@ -105,6 +105,7 @@ playArea.addEventListener('keydown', (e) => {
 	if (e.code === 'Space') {
 		// checking if the function returned true
 		// making sure new scramble is only generated when timer is stopped
+		myTimer.puzzle = puzzleChangeDropdown.value
 		if (myTimer.stop()) newScramble()
 	}
 })

@@ -14,11 +14,12 @@ export class Timer {
 	 * @param {null | string} currentScramble
 	 * @param {Array<any>} scoresArray
 	 */
-	constructor(outputElem, currentScramble, scoresArray) {
+	constructor(outputElem, currentScramble, scoresArray, puzzle) {
 		// referencing HTML object to display text
 		this.outputElem = outputElem
 		this.currentScramble = currentScramble
 		this.scoresArray = scoresArray
+		this.puzzle = puzzle
 	}
 
 	updateScramble(newScramble) {
@@ -51,7 +52,8 @@ export class Timer {
 				currentDate.getMinutes() +
 				':' +
 				currentDate.getSeconds(),
-			timestamp: timestamp.now()
+			timestamp: timestamp.now(),
+			puzzleType: this.puzzle
 		}
 		if (score.scramble) return score
 		else alert('Scramble not updated. Try again')
