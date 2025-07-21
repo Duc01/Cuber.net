@@ -18,8 +18,8 @@ export class Stats {
 		this.firebaseUID = firebaseUID
 	}
 
-	/* If firebaseScores can be read it's fair to assume that the user is logged in
-	 * Hence local scores can be loaded into the local db for processing to avoid multiple reads and writes to the main server */
+	/* If firebaseScores can be read it's fair to assume that the user is logged in 
+	Hence local scores can be loaded into the local db for processing to avoid multiple reads and writes to the main server */
 	async getFirebaseScores(limit_value) {
 		let timesList = []
 		const userDoc = doc(db, 'users', auth.currentUser.uid)
@@ -37,7 +37,7 @@ export class Stats {
 	}
 
 	/**
-	 * get scores stored locally when
+	 * get scores stored locally when user isn't logged in  
 	 * @param {Number} limit
 	 * @returns Array
 	 */
@@ -98,22 +98,6 @@ export class Stats {
 	}
 
 	async getAvgOfScores(limit) {
-		// if (typeof this.firebaseUID === 'string') {
-		// 	const scoreArr = await this.getFirebaseScores(limit)
-		// 	console.log(scoreArr)
-		// 	const calculatedAvg = this.calculateAvgTime(scoreArr)
-		// 	return calculatedAvg
-		// } else if (typeof this.firebaseUID === 'undefined') {
-		// 	const scoreArr = await this.getLocalScores(limit)
-		// 	console.log(scoreArr)
-
-		// 	const calculatedAvg = this.calculateAvgTime(scoreArr)
-		// 	return calculatedAvg
-		// } else {
-		// 	return new Error(
-		// 		`Invalid FirebaseUID of type ${typeof this.firebaseUID}`
-		// 	)
-		// }
 		var scoreArr = []
 		await new Promise(async (resolve, reject) => {
 			onAuthStateChanged(auth, async (user) => {

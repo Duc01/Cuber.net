@@ -21,7 +21,6 @@ const signInBtn = document.querySelector('.sign-in')
 const signOutBtn = document.querySelector('.sign-out')
 
 const scrambleText = document.querySelector('.scramble') // scramble display element
-const cubeInstance = new Cube('ThreeByThree') // cube class instance
 const reScrambleBtn = document.querySelector('#rescramble')
 const scrambleDisplayBox = document.querySelector('#scramble-display')
 
@@ -68,6 +67,11 @@ stats
 		console.error(e)
 	})
 
+const cubeInstance = new Cube('3X3')
+const puzzleChangeDropdown = document.querySelector('#puzzle-changer')
+
+cubeInstance.cubeType = puzzleChangeDropdown.value
+
 // setting scramble to null to be updated later
 // if scramble is null when timer is stopped then an alert should be triggered
 const myTimer = new Timer(timerElem, null, scoresArray)
@@ -87,6 +91,11 @@ function newScramble() {
 }
 
 newScramble() // generating new scramble on initial load
+
+puzzleChangeDropdown.addEventListener('input', (_e) => {
+	cubeInstance.cubeType = puzzleChangeDropdown.value
+	newScramble()
+})
 
 playArea.addEventListener('keyup', (e) => {
 	if (e.code === 'Space') myTimer.start()
