@@ -83,7 +83,7 @@ export class Timer {
 		else timesList.prepend(newScore)
 	}
 
-	saveScoreFirebase() {
+	async saveScoreFirebase() {
 		const scoreData = this.createScoreData()
 		// location to user
 		const userData = doc(db, 'users', auth.currentUser.uid)
@@ -93,7 +93,7 @@ export class Timer {
 		this.addScoreToList(scoreData) // appending new score to display
 	}
 
-	saveScoreLocalStorage() {
+	async saveScoreLocalStorage() {
 		const scoreData = this.createScoreData()
 		localforage.setItem(scoreData.timestamp, scoreData)
 		this.addScoreToList(scoreData) // appending new score to display
@@ -106,7 +106,8 @@ export class Timer {
 		this.interval = window.setInterval(() => this.displayOutput(), 10)
 	}
 
-	stop() {
+
+	stop(newScrambleFunc) {
 		// returning false for use in home.js
 		if (!this.interval || this.isTimeoutActive) return
 		// stopping timer and displaying final time
@@ -117,12 +118,12 @@ export class Timer {
 		else if (!auth.currentUser) this.saveScoreLocalStorage()
 		// making sure timer cannot be started again within second
 		// this is to avoid timer starting on releasing space
+		newScrambleFunc()
 		this.isTimeoutActive = true
 		this.timeout = window.setTimeout(() => {
 			this.interval = null
 			this.isTimeoutActive = false
 
-			return true // returns true when timer is stopped
 		}, 2000)
 	}
 }

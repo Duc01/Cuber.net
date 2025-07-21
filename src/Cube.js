@@ -7,15 +7,17 @@ export class Cube {
 	}
 
 	generateScramble() {
+		let scramble = ''
+		let displayElem = ''
 		switch (this.cubeType) {
 			case '3X3':
-				const threeByThreeScramble = this.threeByThreeScramble()
-				const threeByThreeVisual = this.threeByThreeDisplay(threeByThreeScramble)
-				return [threeByThreeScramble, threeByThreeVisual]
+				scramble = this.threeByThreeScramble()
+				displayElem = this.displayFunc(scramble, '333')
+				return [scramble, displayElem]
 			case '2X2':
-				const twoByTwoScramble = this.twoByTwoScramble()
-				const twoByTwoVisual = this.twoByTwoDisplay(twoByTwoScramble)
-				return [twoByTwoScramble, twoByTwoVisual]
+				scramble = this.twoByTwoScramble()
+				displayElem = this.displayFunc(scramble, '222')
+				return [scramble, displayElem]
 		}
 	}
 
@@ -32,16 +34,6 @@ export class Cube {
 		return scramble
 	}
 
-	/** 
-	 * @param {string} currentScramble
-	 * @return {ScrambleDisplay} */
-	threeByThreeDisplay(currentScramble) {
-		const el = new ScrambleDisplay()
-		el.event = '333'
-		el.scramble = currentScramble
-		return el
-	}
-
 	twoByTwoScramble() {
 		let twoByTwo = new Scrambow().setType('222')
 		let scrambleObject = twoByTwo.get(1)[0]
@@ -49,11 +41,11 @@ export class Cube {
 		return scramble
 	}
 
-	twoByTwoDisplay(currentScramble) {
-		const el = new ScrambleDisplay()
-		el.event = '222'
-		el.scramble = currentScramble
-		return el
+	displayFunc(currentScramble, puzzleType) {
+		const displayElem = new ScrambleDisplay()
+		displayElem.event = puzzleType
+		displayElem.scramble = currentScramble
+		return displayElem
 	}
 
 }

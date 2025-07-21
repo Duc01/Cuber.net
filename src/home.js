@@ -106,7 +106,7 @@ playArea.addEventListener('keydown', (e) => {
 		// checking if the function returned true
 		// making sure new scramble is only generated when timer is stopped
 		myTimer.puzzle = puzzleChangeDropdown.value
-		if (myTimer.stop()) newScramble()
+		myTimer.stop(newScramble)
 	}
 })
 
