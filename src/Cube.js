@@ -2,7 +2,7 @@ import { Scrambow } from 'scrambow'
 import { ScrambleDisplay } from 'scramble-display'
 
 export class Cube {
-	constructor(cubeType) {
+	constructor(cubeType = undefined) {
 		this.cubeType = cubeType
 	}
 

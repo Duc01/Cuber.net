@@ -14,8 +14,9 @@ export class Stats {
 	/**
 	 * @param {string | null} firebaseUID - The Firebase user ID.
 	 */
-	constructor(firebaseUID) {
+	constructor(firebaseUID, puzzleType) {
 		this.firebaseUID = firebaseUID
+		this.puzzleType = puzzleType
 	}
 
 	/* If firebaseScores can be read it's fair to assume that the user is logged in 

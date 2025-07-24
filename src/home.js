@@ -46,7 +46,12 @@ onAuthStateChanged(auth, async (user) => {
 	}
 })
 
+const cubeInstance = new Cube()
+const puzzleChangeDropdown = document.querySelector('#puzzle-changer')
+cubeInstance.cubeType = puzzleChangeDropdown.value
+
 const stats = new Stats()
+stats.puzzleType = puzzleChangeDropdown.value
 const ao5Elem = document.querySelector('#ao5')
 const ao12Elem = document.querySelector('#ao12')
 // stats.pushAvgToHTML(ao5Elem, ao12Elem)
@@ -67,10 +72,7 @@ stats
 		console.error(e)
 	})
 
-const cubeInstance = new Cube('3X3')
-const puzzleChangeDropdown = document.querySelector('#puzzle-changer')
 
-cubeInstance.cubeType = puzzleChangeDropdown.value
 
 // setting scramble to null to be updated later
 // if scramble is null when timer is stopped then an alert should be triggered
