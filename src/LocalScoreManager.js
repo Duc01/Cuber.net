@@ -1,16 +1,16 @@
 import localforage from 'localforage'
-import { Timer } from './Timer'
+import { ScoreManager } from './ScoreManager'
 import { addDoc, collection, doc } from 'firebase/firestore'
 import { db } from './index'
 
 export class LocalScoreManager {
 	/**
-	 * @param myTimer {Timer}
+	 * @param scoreManager {ScoreManager}
 	 */
-	displayLocalScores(myTimer) {
+	displayLocalScores(scoreManager) {
 		localforage
 			.iterate((score, _key, i) => {
-				if (i <= 12) myTimer.addScoreToList(score)
+				if (i <= 12) scoreManager.addScoreToList(score)
 			})
 			.then(() => console.log('Added all local scores to list'))
 	}

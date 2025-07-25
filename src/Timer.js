@@ -1,6 +1,3 @@
-import localforage from 'localforage'
-import { db, auth } from './index'
-import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore'
 import timestamp from 'unix-timestamp'
 
 export class Timer {
@@ -59,46 +56,6 @@ export class Timer {
 		else alert('Scramble not updated. Try again')
 	}
 
-	addScoreToList(scoreData, isAppend = false) {
-		// adding new score to the end of scoresArray
-		this.scoresArray.push(scoreData)
-		const timesList = document.querySelector('#times')
-		const newScore = document.createElement('div')
-		newScore.innerHTML = `
-		<h3 class="content-center p-0 font-bold text-3xl font-spacemono">${scoreData.time}</h3>
-		<p class="text-sm">${scoreData.datetime}</p>
-		<!-- <p class="text-sm bottom-0 right-0 absolute">expand</p> -->
-		<?xml version="1.0" encoding="UTF-8"?><svg width="24px" height="24px" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff" class="absolute bottom-0 right-0 mr-3 mb-3"><path d="M9 9L4 4M4 4V8M4 4H8" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15 9L20 4M20 4V8M20 4H16" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 15L4 20M4 20V16M4 20H8" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15 15L20 20M20 20V16M20 20H16" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>`
-		newScore.classList.add(
-			'bg-primary',
-			'w-[90%]',
-			'h-[150px]',
-			'p-4',
-			'my-4',
-			'mx-auto',
-			'rounded-lg',
-			'drop-shadow-xl'
-		)
-		if (isAppend) timesList.append(newScore)
-		else timesList.prepend(newScore)
-	}
-
-	async saveScoreFirebase() {
-		const scoreData = this.createScoreData()
-		// location to user
-		const userData = doc(db, 'users', auth.currentUser.uid)
-		// reference to scores collection of specific user
-		const scoresCollection = collection(userData, 'scores')
-		addDoc(scoresCollection, scoreData)
-		this.addScoreToList(scoreData) // appending new score to display
-	}
-
-	async saveScoreLocalStorage() {
-		const scoreData = this.createScoreData()
-		localforage.setItem(scoreData.timestamp, scoreData)
-		this.addScoreToList(scoreData) // appending new score to display
-	}
-
 	start() {
 		if (this.interval) return
 		this.startTime = Date.now()
@@ -106,16 +63,17 @@ export class Timer {
 		this.interval = window.setInterval(() => this.displayOutput(), 10)
 	}
 
-
-	stop(newScrambleFunc) {
+	stop(newScrambleFunc, scoreManager) {
 		// returning false for use in home.js
 		if (!this.interval || this.isTimeoutActive) return
 		// stopping timer and displaying final time
 		window.clearInterval(this.interval)
 		this.displayOutput()
 		// saving score
-		if (auth.currentUser) this.saveScoreFirebase()
-		else if (!auth.currentUser) this.saveScoreLocalStorage()
+		const scoreData = this.createScoreData()
+		if (scoreData) {
+			scoreManager.addScore(scoreData)
+		}
 		// making sure timer cannot be started again within second
 		// this is to avoid timer starting on releasing space
 		newScrambleFunc()
@@ -123,7 +81,6 @@ export class Timer {
 		this.timeout = window.setTimeout(() => {
 			this.interval = null
 			this.isTimeoutActive = false
-
 		}, 2000)
 	}
 }

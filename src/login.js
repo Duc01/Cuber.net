@@ -9,7 +9,7 @@ const modal = document.querySelector('#modal')
 const modalAccept = document.querySelector('#modal-accept')
 const modalCancel = document.querySelector('#modal-cancel')
 
-const scoreManager = new LocalScoreManager()
+const localScores = new LocalScoreManager()
 
 function signInWithGoogle() {
 	const provider = new GoogleAuthProvider()
@@ -19,7 +19,7 @@ function signInWithGoogle() {
 		await setDoc(doc(db, 'users', user.uid), { merge: true })
 
 		if (await localforage.length()) {
-			await scoreManager.uploadScoresToFirebase(user.uid)
+			await localScores.uploadScoresToFirebase(user.uid)
 		}
 
 		console.log(user.uid)
