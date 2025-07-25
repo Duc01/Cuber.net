@@ -1,4 +1,5 @@
 import timestamp from 'unix-timestamp'
+import { ScoreManager } from './ScoreManager'
 
 export class Timer {
 	interval = null
@@ -19,6 +20,10 @@ export class Timer {
 		this.puzzle = puzzle
 	}
 
+	/**
+	 * Update scramble text to a newly generated scramble
+	 * @param {string} newScramble 
+	 */
 	updateScramble(newScramble) {
 		this.currentScramble = newScramble
 	}
@@ -27,7 +32,11 @@ export class Timer {
 		this.outputElem.textContent = this.formatMS(Date.now() - this.startTime)
 	}
 
-	// format date to minutes:seconds.subseconds
+	/**
+	 * format date to MM::SS.XX
+	 * @param {Number} ms 
+	 * @returns {Date}
+	 */
 	formatMS(ms) {
 		return new Date(ms).toISOString().substring(14, 22)
 	}
@@ -56,6 +65,9 @@ export class Timer {
 		else alert('Scramble not updated. Try again')
 	}
 
+	/**
+	 * Start timer
+	 */
 	start() {
 		if (this.interval) return
 		this.startTime = Date.now()
@@ -63,6 +75,11 @@ export class Timer {
 		this.interval = window.setInterval(() => this.displayOutput(), 10)
 	}
 
+	/**
+	 * Stop timer
+	 * @param {Function} newScrambleFunc 
+	 * @param {ScoreManager} scoreManager 
+	 */
 	stop(newScrambleFunc, scoreManager) {
 		// returning false for use in home.js
 		if (!this.interval || this.isTimeoutActive) return

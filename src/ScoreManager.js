@@ -7,6 +7,11 @@ export class ScoreManager {
 		this.scoresArray = []
 	}
 
+	/**
+	 * Add given score to sidebar list
+	 * @param {Object} scoreData 
+	 * @param {boolean} isAppend 
+	 */
 	addScoreToList(scoreData, isAppend = false) {
 		// adding new score to the end of scoresArray
 		this.scoresArray.push(scoreData)
@@ -31,6 +36,9 @@ export class ScoreManager {
 		else timesList.prepend(newScore)
 	}
 
+	/**
+	 * @param {Object} scoreData 
+	 */
 	async saveScoreFirebase(scoreData) {
 		// location to user
 		const userData = doc(db, 'users', auth.currentUser.uid)
@@ -40,6 +48,9 @@ export class ScoreManager {
 		this.addScoreToList(scoreData) // appending new score to display
 	}
 
+	/**
+	 * @param {Object} scoreData 
+	 */
 	async saveScoreLocalStorage(scoreData) {
 		await localforage.setItem(scoreData.timestamp, scoreData)
 		this.addScoreToList(scoreData) // appending new score to display
