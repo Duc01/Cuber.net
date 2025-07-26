@@ -98,6 +98,19 @@ export class Stats {
 		return avgTimeString
 	}
 
+	async getScores(limit) {
+		if (auth.currentUser) {
+			const data = await this.getFirebaseScores(limit)
+			return data
+		}
+		else if (!auth.currentUser) {
+			const data = await this.getLocalScores(limit)
+			return data
+
+		}
+
+	}
+
 	async getAvgOfScores(limit) {
 		var scoreArr = []
 		await new Promise(async (resolve, reject) => {
