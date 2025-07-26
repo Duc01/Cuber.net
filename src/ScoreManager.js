@@ -52,7 +52,7 @@ export class ScoreManager {
 	 * @param {Object} scoreData 
 	 */
 	async saveScoreLocalStorage(scoreData) {
-		await localforage.setItem(scoreData.timestamp, scoreData)
+		await localforage.setItem((scoreData.timestamp).toString(), scoreData)
 		this.addScoreToList(scoreData) // appending new score to display
 	}
 
@@ -62,13 +62,5 @@ export class ScoreManager {
 		} else {
 			this.saveScoreLocalStorage(scoreData)
 		}
-	}
-
-	displayLocalScores() {
-		localforage
-			.iterate((score, _key, i) => {
-				if (i <= 12) this.addScoreToList(score)
-			})
-			.then(() => console.log('Added all local scores to list'))
 	}
 }

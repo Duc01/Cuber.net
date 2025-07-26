@@ -7,12 +7,17 @@ export class LocalScoreManager {
 	/**
 	 * @param scoreManager {ScoreManager}
 	 */
-	displayLocalScores(scoreManager) {
-		localforage
-			.iterate((score, _key, i) => {
-				if (i <= 12) scoreManager.addScoreToList(score)
-			})
-			.then(() => console.log('Added all local scores to list'))
+	async displayLocalScores(scoreManager) {
+		// localforage
+		// 	.iterate((score, _key, i) => {
+		// 		if (i <= 12) scoreManager.addScoreToList(score)
+		// 	})
+		// 	.then(() => console.log('Added all local scores to list'))
+		const keys = await localforage.keys()
+		for (let i = 1; i < keys.length || i <= 12; i++) {
+			const scoreData = await localforage.getItem(keys[keys.length - i])
+			scoreManager.addScoreToList(scoreData, true)
+		}
 	}
 
 	//! Limit score writes to firebase to prevent excessive usage
