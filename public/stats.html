@@ -10,27 +10,33 @@
 </head>
 
 <body>
-	<section id="stats-content" class="flex items-center content-center justify-around bg-background-main text-text">
-		<div class="transparent w-[60vw] flex items-center content-center flex-col">
-			<div class="items-left w-full">
-				<h1>Home</h1>
-			</div>
-			<div class="p-4 m-6 bg-side-menu rounded-lg">
-				<div id="scores-stat"></div>
-				<h2>Scores</h2>
-			</div>
-			<div id="ao5-stat" class="p-4 m-6 bg-side-menu rounded-lg">
-				<h2>Average of Five</h2>
+	<div class="text-text font-jetbrainsmono">
+		<nav class="flex content-center justify-around items-start h-[8vh] min-h-[70px] max-h-[150px] bg-nav">
+			<h1>Home</h1>
+		</nav>
+		<section id="stats-content" npx npm-check-updates -u
+			class="flex content-center justify-around bg-background-main text-text">
 
+			<div class="transparent w-[60vw] flex items-center flex-col">
+
+				<div class="p-4 m-6 bg-side-menu rounded-lg w-[70vw]">
+					<h2 class="mb-4 mt-0 text-center">Scores</h2>
+					<canvas id="scores-chart"></canvas>
+				</div>
+				<div id="ao5-stat" class="p-4 m-6 bg-side-menu rounded-lg">
+					<h2>Average of Five</h2>
+
+				</div>
+				<div id="ao12-stat" class="p-4 m-6 bg-side-menu rounded-lg">
+					<h2>Average of Twelve</h2>
+				</div>
+				<div>
+					<h1>All Times</h1>
+				</div>
 			</div>
-			<div id="ao12-stat" class="p-4 m-6 bg-side-menu rounded-lg">
-				<h2>Average of Twelve</h2>
-			</div>
-			<div>
-				<h1>All Times</h1>
-			</div>
-		</div>
-	</section>
+		</section>
+	</div>
+
 </body>
 
 </html>
