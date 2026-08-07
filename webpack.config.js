@@ -8,7 +8,8 @@ const stylesHandler = 'style-loader'
 const config = {
 	entry: {
 		home: './src/home.js',
-		login: './src/login.js'
+		login: './src/login.js',
+		stats: './src/statsPage.js'
 	},
 	output: {
 		path: path.resolve(__dirname, 'public/dist'),

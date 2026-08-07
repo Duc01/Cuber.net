@@ -1,7 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
 @tailwind utilities;
+@tailwind utilities;
+@import "tailwindcss";
+
+/* 1. Tell Tailwind where your files are (Replaces 'content') */
+@source './public/**/*.html';
+@source './public/dist/home.bundle.js';
+@source './public/dist/login.bundle.js';
+
+/* 2. Add your custom configurations (Replaces 'theme.extend') */
+@theme {
+  --color-text: #F9E5D7;
+  --color-background-main: #282523;
+  --color-side-menu: #211E1E;
+  --color-primary: #C07F24;
+  --color-secondary: #7D9C16;
+  --color-secondary-hover: #586F0E;
+  --color-nav: #363230;
+
+  --grid-template-columns-primary-grid: 18.5vw 1fr;
+
+  --font-spacemono: "Space Mono", monospace;
+  --font-jetbrainsmono: "JetBrains Mono", monospace;
+}
+
 
 /* @theme {
 	--font-delagothicone: 'Dela Gothic One', sans-serif;
