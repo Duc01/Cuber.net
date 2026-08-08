@@ -35,7 +35,7 @@ export class Timer {
 	/**
 	 * format date to MM::SS.XX
 	 * @param {Number} ms 
-	 * @returns {Date}
+	 * @returns {String}
 	 */
 	formatMS(ms) {
 		return new Date(ms).toISOString().substring(14, 22)
@@ -43,8 +43,11 @@ export class Timer {
 
 	createScoreData() {
 		const currentDate = new Date()
+		const timeFormat = this.formatMS(Date.now() - this.startTime)
+		const a = timeFormat.split(':') // temp variable
 		const score = {
-			time: this.formatMS(Date.now() - this.startTime),
+			time: timeFormat,
+			timeSecs: (+a[0]) * 60 + (+a[1]), 
 			scramble: this.currentScramble,
 			datetime:
 				currentDate.getDate() +
@@ -65,9 +68,6 @@ export class Timer {
 		else alert('Scramble not updated. Try again')
 	}
 
-	/**
-	 * Start timer
-	 */
 	start() {
 		if (this.interval) return
 		this.startTime = Date.now()
