@@ -10,28 +10,21 @@
 </head>
 
 <body>
-	<div class="text-text font-jetbrainsmono">
-		<nav class="flex content-center justify-around items-start h-[8vh] min-h-17.5 max-h-37.5 bg-nav">
-			<h1>Home</h1>
+	<div class="text-text font-jetbrainsmono overflow-hidden">
+		<nav class="flex content-center justify-center items-center h-[8vh] min-h-17.5 max-h-37.5 bg-nav">
+			<button class="mr-16 ml-auto rounded-[0.25rem] bg-secondary px-2 py-1 border-none z-10"
+						onclick="document.location.href='index.html'">
+						Home
+					</button>
 		</nav>
-		<section id="stats-content" npx npm-check-updates -u
-			class="flex content-center justify-around bg-background-main text-text">
+		<section id="stats-content"
+			class="flex content-center justify-around bg-background-main text-text h-screen">
 
 			<div class="transparent w-[60vw] flex items-center flex-col">
 
 				<div class="p-4 m-6 bg-side-menu rounded-lg w-[70vw]">
 					<h2 class="mb-4 mt-0 text-center">Scores</h2>
 					<canvas id="scores-chart"></canvas>
-				</div>
-				<div id="ao5-stat" class="p-4 m-6 bg-side-menu rounded-lg">
-					<h2>Average of Five</h2>
-
-				</div>
-				<div id="ao12-stat" class="p-4 m-6 bg-side-menu rounded-lg">
-					<h2>Average of Twelve</h2>
-				</div>
-				<div>
-					<h1>All Times</h1>
 				</div>
 			</div>
 		</section>
