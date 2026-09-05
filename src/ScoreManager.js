@@ -63,4 +63,19 @@ export class ScoreManager {
 			this.saveScoreLocalStorage(scoreData)
 		}
 	}
+
+	/**
+	 * Get all scores corresponding to the current puzzle type
+	 * @param {String} currentPuzzle 
+	 * @returns {Promise<Object[]>}
+	 */
+	async getReleventScores(currentPuzzle) {
+		const result = []
+		await localforage.iterate((value) => {
+			if (value.puzzleType === currentPuzzle) {
+				result.push(value)
+			}
+		})
+		return result
+	}
 }

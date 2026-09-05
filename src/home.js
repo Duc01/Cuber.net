@@ -77,7 +77,6 @@ const scoreManager = new ScoreManager()
 const myTimer = new Timer(timerElem, null, scoreManager.scoresArray, puzzleChangeDropdown.value)
 const localScores = new LocalScoreManager()
 
-localScores.displayLocalScores(scoreManager)
 
 function newScramble() {
 	const generatedScramble = cubeInstance.generateScramble()
@@ -90,10 +89,17 @@ function newScramble() {
 	scrambleDisplayBox.appendChild(scrambleVisual)
 }
 
+// rendering scores to side bar
+localScores.displayLocalScores(scoreManager, puzzleChangeDropdown.value)
+
 newScramble() // generating new scramble on initial load
 puzzleChangeDropdown.addEventListener('input', (_e) => {
 	cubeInstance.cubeType = puzzleChangeDropdown.value
 	newScramble()
+
+	const timesList = document.querySelector('#times')
+	timesList.replaceChildren()
+	localScores.displayLocalScores(scoreManager, puzzleChangeDropdown.value)
 })
 
 playArea.addEventListener('keyup', (e) => {

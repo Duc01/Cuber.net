@@ -5,14 +5,18 @@ import { db } from './index'
 
 export class LocalScoreManager {
 	/**
-	 * @param scoreManager {ScoreManager}
+	 * @param {ScoreManager} scoreManager
+	 * @param {String} currentPuzzle
 	 */
-	async displayLocalScores(scoreManager) {
-		const keys = await localforage.keys()
-		for (let i = 1; i < keys.length || i <= 12; i++) {
-			const scoreData = await localforage.getItem(keys[keys.length - i])
-			scoreManager.addScoreToList(scoreData, true)
-		}
+	async displayLocalScores(scoreManager, currentPuzzle) {
+		// localforage.iterate((scoreData, key) => {
+		// 	if (scoreData.puzzleType === currentPuzzle) 
+		// 		scoreManager.addScoreToList(scoreData, true)
+		// })
+		const scores = await scoreManager.getReleventScores(currentPuzzle)
+		scores.forEach((score) => {
+			scoreManager.addScoreToList(score, true)
+		})
 	}
 
 	//! Limit score writes to firebase to prevent excessive usage

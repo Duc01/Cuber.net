@@ -11,6 +11,7 @@ export class Timer {
 	 * @param {HTMLElement} outputElem
 	 * @param {null | string} currentScramble
 	 * @param {Array<any>} scoresArray
+	 * @param {String} puzzle
 	 */
 	constructor(outputElem, currentScramble, scoresArray, puzzle) {
 		// referencing HTML object to display text
@@ -22,7 +23,7 @@ export class Timer {
 
 	/**
 	 * Update scramble text to a newly generated scramble
-	 * @param {string} newScramble 
+	 * @param {string} newScramble
 	 */
 	updateScramble(newScramble) {
 		this.currentScramble = newScramble
@@ -34,7 +35,7 @@ export class Timer {
 
 	/**
 	 * format date to MM::SS.XX
-	 * @param {Number} ms 
+	 * @param {Number} ms
 	 * @returns {String}
 	 */
 	formatMS(ms) {
@@ -45,9 +46,17 @@ export class Timer {
 		const currentDate = new Date()
 		const timeFormat = this.formatMS(Date.now() - this.startTime)
 		const a = timeFormat.split(':') // temp variable
+		/**
+		 * @type {{time: String, 
+		 * timeSecs: int, 
+		 * scramble: String, 
+		 * datetime: String, 
+		 * timestamp: number, 
+		 * puzzleType: String}}
+		 */
 		const score = {
 			time: timeFormat,
-			timeSecs: (+a[0]) * 60 + (+a[1]), 
+			timeSecs: +a[0] * 60 + +a[1],
 			scramble: this.currentScramble,
 			datetime:
 				currentDate.getDate() +
@@ -77,8 +86,8 @@ export class Timer {
 
 	/**
 	 * Stop timer
-	 * @param {Function} newScrambleFunc 
-	 * @param {ScoreManager} scoreManager 
+	 * @param {Function} newScrambleFunc
+	 * @param {ScoreManager} scoreManager
 	 */
 	stop(newScrambleFunc, scoreManager) {
 		// returning false for use in home.js
