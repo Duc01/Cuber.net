@@ -18,8 +18,14 @@
 					</button>
 		</nav>
 		<section id="stats-content"
-			class="flex content-center justify-around bg-background-main text-text h-screen">
-
+			class="flex content-center items-center bg-background-main text-text h-screen flex-col">
+			<div class="rounded m-8">
+				Puzzle: 
+					<select name="puzzles" id="puzzle-changer" class="bg-side-menu text-text text-xl p-1 rounded-md">
+						<option value="3X3">3X3X3</option>
+						<option value="2X2">2X2X2</option>
+					</select>
+			</div>
 			<div class="transparent w-[60vw] flex items-center flex-col">
 
 				<div class="p-4 m-6 bg-side-menu rounded-lg w-[70vw]">

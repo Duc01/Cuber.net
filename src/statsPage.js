@@ -1,18 +1,14 @@
 import Chart from 'chart.js/auto'
 import localforage from 'localforage'
+import { ScoreManager } from './ScoreManager'
 
-const keys = await localforage.keys()
-let scores = []
-for (let i = 0; i < keys.length; i++) {
-	await localforage.getItem(keys[i], (err, value) => {
-		scores.push(value)
-	})
-}
+const puzzleType = document.querySelector('#puzzle-changer')
+
+const manager = new ScoreManager();
+const scores = await manager.getReleventScores(puzzleType.value);
 console.log(scores)
 
-// Chart displaying all scores
-const rawScores = document.querySelector('#scores-chart')
-new Chart(rawScores, {
+const config = {
 	type: 'line',
 	data: {
 		labels: scores.map((_, index) => index + 1),
@@ -36,4 +32,15 @@ new Chart(rawScores, {
 			}
 		}
 	}
+}
+// Chart displaying all scores
+const rawScores = document.querySelector('#scores-chart')
+let chart = new Chart(rawScores, config)
+
+puzzleType.addEventListener('input', async (_e) => {
+	const scores = await manager.getReleventScores(puzzleType.value);
+	chart.data.labels = scores.map((_, index) => index + 1)
+	chart.data.datasets.data = scores.map(row => row.timeSecs)
+
+	chart.update()
 })

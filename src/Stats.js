@@ -40,6 +40,7 @@ export class Stats {
 	/**
 	 * get scores stored locally when user isn't logged in  
 	 * @param {Number} limit
+	 * @param {String}
 	 * @returns Array
 	 */
 	async getLocalScores(limit) {
